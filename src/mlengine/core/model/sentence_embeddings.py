@@ -1,7 +1,6 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-
 def sbert(corpus_arr: np.ndarray, *, language: str = "en") -> np.ndarray:
     """Turn an array of documents into vector embeddings
     Language Code references here -> https://www.loc.gov/standards/iso639-2/php/code_list.php
