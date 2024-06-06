@@ -1,22 +1,30 @@
-from inspect import stack
+import pandas as pd
 
-import cudf
-import numpy as np
-
-from mlengine.core.model.dimensionality_reduction import umap
-from mlengine.core.model.hierarchical_clustering import hdbscan
-from mlengine.core.model.sentence_embeddings import sbert
-from mlengine.services.storage.gcs_service import gcs_client
+from mlengine.core.inference.predict import get_top_queries
+from mlengine.core.model import train_embedding_model, get_corpus_embeddings
 
 
-def model_run(
-    df: cudf.DataFrame,
-    *,
-    language: str,
-    post_content_column_name: str,
-) -> cudf.DataFrame:
+def run() -> pd.DataFrame:
+    corpus = [
+        "A man is eating food.",
+        "A man is eating a piece of bread.",
+        "The girl is carrying a baby.",
+        "A man is riding a horse.",
+        "A woman is playing violin.",
+        "Two men pushed carts through the woods.",
+        "A man is riding a white horse on an enclosed ground.",
+        "A monkey is playing drums.",
+        "A cheetah is running behind its prey.",
+    ]
+    queries = [
+        "A man is eating pasta.",
+        "Someone in a gorilla costume is playing a set of drums.",
+        "A cheetah chases prey on across a field.",
+    ]
+    model = train_embedding_model()
+    corpus_embeddings = get_corpus_embeddings(model, corpus)
+    return get_top_queries(queries[0], model, corpus, corpus_embeddings)
 
-    embeddings: np.ndarray = sbert(
-        df[f"cleaned_{post_content_column_name}"].to_numpy(), language=language
-    )
-    return df
+
+if __name__ == "__main__":
+    print(run())

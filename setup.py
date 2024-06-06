@@ -36,6 +36,7 @@ model_requirements = {
     "emoji",
     "numpy",
     "spacy",
+    "pandas",
     "sentence-transformers",
 }
 
@@ -65,16 +66,12 @@ setup(
     long_description_content_type="text/markdown",
     package_dir={"": "src"},
     packages=find_packages("src", exclude=["*tests"]),
-    package_data={
-        name: ["*.txt", "*.json", "*.preamble", "*.sql", "py.typed"]
-    },
+    package_data={name: ["*.txt", "*.json", "*.preamble", "py.typed"]},
     entry_points={
         "console_scripts": [f"{name} = {name}.entrypoints:main"],
     },
-    python_requires=">=3.8",
-    install_requires=list(
-        base_requirements | model_requirements
-    ),
+    python_requires=">=3.9",
+    install_requires=list(base_requirements | model_requirements),
     extras_require={
         "dev": list(dev_requirements),
     },

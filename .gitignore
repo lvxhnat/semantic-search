@@ -5,6 +5,7 @@
 dask-worker-space
 
 #Others
+data/
 .DS_Store
 .vscode/
 bin
