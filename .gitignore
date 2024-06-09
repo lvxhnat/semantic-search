@@ -22,10 +22,6 @@ db.sqlite3
 *.zip
 *.tokens
 *.bin
-# Exclude all Jupyter Notebooks
-*.ipynb
-notebooks/
-pytest.ini
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
