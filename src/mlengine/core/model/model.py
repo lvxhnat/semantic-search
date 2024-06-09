@@ -25,21 +25,5 @@ def __generate_train_dataset(corpus: List[str]) -> DataLoader:
     return train_dataloader
 
 
-def train_embedding_model(corpus: List[str]):
-    model = __get_embedding_model()
-    train_dataloader = __generate_train_dataset(corpus)
-    train_loss = losses.MultipleNegativesRankingLoss(model)
-    model.fit(
-        train_objectives=[(train_dataloader, train_loss)],
-        epochs=1,
-        show_progress_bar=True,
-    )
-    return model
-
-
-def save_model(model):
-    return model.save("output/simcse-model")
-
-
 def get_corpus_embeddings(model, corpus: List[str]):
     return model.encode(corpus)
