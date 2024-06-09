@@ -14,10 +14,13 @@ from transformers import (
 def train_mlm(
     model_name: str,
     train_path: str,
-):
+) -> str:
     """Tune the pre-trained model using masked language Modeling (MLM).
     This work by masking a portion of the input tokens in a sentence at random and then asking the model to predict the masked tokens.
     The hugging face library provides an out of the box implementation for MLM.
+
+    ### Returns
+    Output directory of model artifacts
     """
 
     per_device_train_batch_size = 64
@@ -131,3 +134,5 @@ def train_mlm(
     model.save_pretrained(output_dir)
 
     print("Training done")
+
+    return output_dir
