@@ -125,14 +125,11 @@ def train_mlm(
         eval_dataset=None,
     )
 
-    print("Save tokenizer to:", output_dir)
     tokenizer.save_pretrained(output_dir)
-
     trainer.train()
 
-    print("Save model to:", output_dir)
     model.save_pretrained(output_dir)
 
-    print("Training done")
+    print("Training Complete. Tokenizer and model saved to:", output_dir)
 
     return output_dir

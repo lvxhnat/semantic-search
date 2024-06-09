@@ -1,3 +1,4 @@
+import os
 import json
 import itertools
 from pathlib import Path
@@ -20,6 +21,7 @@ def __flatten_entry(data_entry):
 def load_msr_dataset(save: bool = True):
 
     data_save_path: str = Path(__file__).parents[4] / "data"
+    os.makedirs(data_save_path, exist_ok=True)
     msr_data_root: str = data_save_path / "msr2013-bug_dataset"
 
     eclipse_dataset = __load_json_dataset(
