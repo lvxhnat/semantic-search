@@ -15,10 +15,9 @@ def train_mlm(
     model_name: str,
     train_path: str,
 ):
-    """
-    This file runs Masked Language Model. You provide a training file. Each line is interpreted as a sentence / paragraph.
-
-    The fine-tuned model is stored in the output/model_name folder.
+    """Tune the pre-trained model using masked language Modeling (MLM).
+    This work by masking a portion of the input tokens in a sentence at random and then asking the model to predict the masked tokens.
+    The hugging face library provides an out of the box implementation for MLM.
     """
 
     per_device_train_batch_size = 64
@@ -91,8 +90,6 @@ def train_mlm(
     train_dataset = TokenizedSentencesDataset(
         train_sentences, tokenizer, max_length
     )
-
-    ##### Training arguments
 
     if do_whole_word_mask:
         data_collator = DataCollatorForWholeWordMask(
