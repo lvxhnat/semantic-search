@@ -1,11 +1,13 @@
+# Project Specific 
+data/*
+output/*
+
+#Others
+*.txt
 *.bin
 *.ftz
 *.json
 *.npy
-dask-worker-space
-
-#Others
-data/
 .DS_Store
 .vscode/
 bin

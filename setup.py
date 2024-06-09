@@ -37,6 +37,8 @@ model_requirements = {
     "numpy",
     "spacy",
     "pandas",
+    "datasets",
+    "transformers[torch]",
     "sentence-transformers",
 }
 
