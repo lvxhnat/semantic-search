@@ -12,8 +12,8 @@ To start off, install dependencies:
 pip install -e .
 ```
 
-Install the sample dataset 
+Install the sample dataset [here](https://github.com/ansymo/msr2013-bug_dataset)
 ```bash 
 mkdir data
-git clone https://github.com/ansymo/msr2013-bug_dataset/tree/master data/
+git clone https://github.com/ansymo/msr2013-bug_dataset.git
 ```
