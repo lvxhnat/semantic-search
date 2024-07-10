@@ -5,7 +5,6 @@ import numpy as np
 
 def hdbscan(
     umap_embeddings: np.ndarray,
-    df,
     *,
     min_samples: int = 8,
     cluster_size_multiplier: float = 0.1,
@@ -23,6 +22,4 @@ def hdbscan(
         cluster_selection_method=cluster_selection_method,
     ).fit(umap_embeddings)
 
-    df["cluster"] = fitted_model.labels_
-
-    return df
+    return fitted_model
