@@ -67,21 +67,8 @@ def search_term(params: QueryParams):
 
     query = params.query
 
-    if (
-        query[0].role != "system"
-        and query[0].content
-        != "You are a helpful AI assistant that is answering questions from a database."
-    ):
-        query = [
-            {
-                "role": "system",
-                "content": "You are a helpful AI assistant that is answering questions from a database.",
-            }
-        ] + query
-
     prompt = craft_prompt(query[-1].content)
-    query[-1] = prompt
-    output = pipe(query, **generation_args)
+    output = pipe(query[:-1] + [prompt], **generation_args)
     # Add the query
     query.append({"role": "system", "content": output[0]["generated_text"]})
     return query

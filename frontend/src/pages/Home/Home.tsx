@@ -21,12 +21,16 @@ import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
 import { request } from "../../common/services/request";
+import Logo from "../../assets/logo.png"
 
 export default function Home() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([])
-  const [chatPrompt, setChatPrompt] = React.useState<string>("");
+  const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([{
+    "role": "system",
+    "content": "You are a helpful AI assistant that is answering questions from a database.",
+}])
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -50,9 +54,12 @@ export default function Home() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            DbGPT
-          </Typography>
+          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+            <img src={Logo} alt="" width="50px"/>
+            <Typography variant="h6" noWrap component="div">
+              DbGPT
+            </Typography>
+          </div>
         </Toolbar>
       </S.AppBar>
       <S.StyledDrawer variant="persistent" anchor="left" open={open}>
@@ -83,7 +90,7 @@ export default function Home() {
         <S.DrawerHeader />
         <S.ChatWrapper>
           {
-            textHistory.map((entry) => <ChatBox user={entry.role}>
+            textHistory.slice(1, textHistory.length).map((entry) => <ChatBox user={entry.role}>
               {entry.content}
             </ChatBox>)
           }
@@ -92,8 +99,11 @@ export default function Home() {
           <ChatInput handleSubmit={(entry) => {
             const newTextHistory = [...textHistory, entry]
             setTextHistory(newTextHistory);
-            console.log(newTextHistory)
-            request().post("query", { query: newTextHistory }).then((res) => console.log(res.data))
+            setLoading(true)
+            request().post("query", { query: newTextHistory }).then((res) => {
+              setTextHistory(res.data)
+              setLoading(false)
+          })
           }}/>
           <Typography variant="subtitle1" align="center" sx={{ paddingTop: 1, paddingBottom: 1 }}>
             DbGPT can something make mistakes. Check important info.
