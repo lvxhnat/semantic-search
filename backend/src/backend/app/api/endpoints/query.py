@@ -65,7 +65,7 @@ def search_term(params: QueryParams):
         "do_sample": False,
     }
 
-    query = params.query
+    query = [item.model_dump(mode="json") for item in params.query]
 
     prompt = craft_prompt(query[-1].content)
     output = pipe(query[:-1] + [prompt], **generation_args)
