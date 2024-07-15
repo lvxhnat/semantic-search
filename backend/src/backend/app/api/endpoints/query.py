@@ -80,9 +80,8 @@ def search_term(params: QueryParams):
         ] + query
 
     prompt = craft_prompt(query[-1].content)
-    output = pipe(prompt, **generation_args)
-    # Add the query
     query[-1] = prompt
+    output = pipe(query, **generation_args)
+    # Add the query
     query.append({"role": "system", "content": output[0]["generated_text"]})
-
     return query
