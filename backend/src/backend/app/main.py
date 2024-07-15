@@ -1,17 +1,7 @@
-import asyncio
 import uvicorn
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
 from backend.app.api import api_router
 from fastapi.middleware.cors import CORSMiddleware
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """startup and shutdown events"""
-    # asyncio.create_task(ibkr_client.connect())
-    # yield
-    # ibkr_client.disconnect()
 
 
 def create_app() -> FastAPI:
@@ -21,7 +11,6 @@ def create_app() -> FastAPI:
         description="",
         version="1.0.0.",
         contact={"name": "Yi Kuang", "email": "yikuang5@gmail.com"},
-        lifespan=lifespan,
     )
 
     origins = [
