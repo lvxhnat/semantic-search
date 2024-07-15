@@ -1,6 +1,6 @@
 import * as S from "./style";
 
-export type Roles = "user" | "admin";
+export type Roles = "user" | "system";
 
 export interface ChatBoxType {
   role: Roles;

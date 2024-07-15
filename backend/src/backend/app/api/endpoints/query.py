@@ -10,8 +10,8 @@ router = APIRouter()
 
 
 class QueryItem(BaseModel):
-    user: Literal["user", "admin"]
-    text: str
+    role: Literal["user", "system"]
+    content: str
 
 
 class QueryParams(BaseModel):

@@ -92,6 +92,7 @@ export default function Home() {
           <ChatInput handleSubmit={(entry) => {
             const newTextHistory = [...textHistory, entry]
             setTextHistory(newTextHistory);
+            console.log(newTextHistory)
             request().post("query", { query: newTextHistory }).then((res) => console.log(res.data))
           }}/>
           <Typography variant="subtitle1" align="center" sx={{ paddingTop: 1, paddingBottom: 1 }}>
