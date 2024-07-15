@@ -37,10 +37,14 @@ def craft_prompt(query: str) -> str:
     return {
         "role": "user",
         "content": f"""
+        
         Answer the question as truthfully as possible using the provided text, and if the answer is not contained within the text below, 
-        respond with "There are some partial information contained within the database." followed by your suggestions.
+        respond with "The database does not seem to contain an answer to your query, however, I can provide some suggestions and related queries." followed by your suggestions.
+        On the other hand, if the context contains terms similar to the query, you can respond with "The database contains some relevant entries to your query" followed by your suggestions.
+
         The context given to you is from a list of possible related defects as found in a database of defect entries.
-        End off the answer by listing the context that I have provided you with, with the headline, "Here are the most relevant entries in the database: "
+        
+        End off the answer by listing the context that I have provided you with, with the headline, "Here are the most entries in the database that might be relevant to your query: "
         
         >>CONTEXT<<
         {context}\n

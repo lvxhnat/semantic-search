@@ -22,7 +22,7 @@ export default function ChatBox(props: ChatBoxProps) {
         justifyContent: props.user === "user" ? "flex-end" : "flex-start",
       }}
     >
-      <S.ChatBox paragraph>
+      <S.ChatBox paragraph role={props.user}>
           {props.children}
       </S.ChatBox>
     </S.ChatBoxWrapper>
