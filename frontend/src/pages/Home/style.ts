@@ -5,13 +5,12 @@ import { ColorsEnum } from "../../common/theme";
 
 export const drawerWidth = 300;
 
-export const ChatInputWrapper = styled("div")(({ theme }) => ({
-  paddingTop: theme.spacing(1),
-}));
-
 export const ChatWrapper = styled("div")(({ theme }) => ({
   height: "100%",
   overflowY: "auto",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 }));
 
 export const Main = styled("main", {

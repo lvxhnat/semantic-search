@@ -43,8 +43,8 @@ def craft_prompt(query: str) -> str:
         On the other hand, if the context contains terms similar to the query, you can respond with "The database contains some relevant entries to your query" followed by your suggestions.
 
         The context given to you is from a list of possible related defects as found in a database of defect entries.
-        
-        End off the answer by listing the context that I have provided you with, with the headline, "Here are the most entries in the database that might be relevant to your query: "
+
+        End off the answer by listing the context that I have provided you with, with the headline, "Here are the most entries in the database that might be relevant to your query: ", with each entry in the context in a bullet point list.
         
         >>CONTEXT<<
         {context}\n

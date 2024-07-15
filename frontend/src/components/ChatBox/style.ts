@@ -13,7 +13,8 @@ interface ChatBoxProps {
 }
 export const ChatBox = styled(Typography)<ChatBoxProps>(({ theme, role }) => ({
   maxWidth: "70%",
-  color: "dark" ? ColorsEnum.white : ColorsEnum.black,
+  whiteSpace: "pre-line",
+  color: theme.palette.mode === "dark" ? ColorsEnum.white : ColorsEnum.black,
   backgroundColor:
     role === "system"
       ? "transparent"

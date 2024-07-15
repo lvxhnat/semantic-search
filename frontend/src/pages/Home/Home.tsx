@@ -21,15 +21,18 @@ import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
 import { request } from "../../common/services/request";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
 
 export default function Home() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([{
-    "role": "system",
-    "content": "You are a helpful AI assistant that is answering questions from a database.",
-}])
+  const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([
+    {
+      role: "system",
+      content:
+        "You are a helpful AI assistant that is answering questions from a database.",
+    },
+  ]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleDrawerOpen = () => {
@@ -55,7 +58,7 @@ export default function Home() {
             <MenuIcon />
           </IconButton>
           <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-            <img src={Logo} alt="" width="50px"/>
+            <img src={Logo} alt="" width="50px" />
             <Typography variant="h6" noWrap component="div">
               DbGPT
             </Typography>
@@ -89,26 +92,32 @@ export default function Home() {
       <S.Main open={open}>
         <S.DrawerHeader />
         <S.ChatWrapper>
-          {
-            textHistory.slice(1, textHistory.length).map((entry) => <ChatBox user={entry.role}>
-              {entry.content}
-            </ChatBox>)
-          }
+          {textHistory.slice(1, textHistory.length).map((entry, i) => (
+            <ChatBox key={`${entry.role}-${i}`} user={entry.role}>{entry.content}</ChatBox>
+          ))}
         </S.ChatWrapper>
-        <S.ChatInputWrapper>
-          <ChatInput handleSubmit={(entry) => {
-            const newTextHistory = [...textHistory, entry]
-            setTextHistory(newTextHistory);
-            setLoading(true)
-            request().post("query", { query: newTextHistory }).then((res) => {
-              setTextHistory(res.data)
-              setLoading(false)
-          })
-          }}/>
-          <Typography variant="subtitle1" align="center" sx={{ paddingTop: 1, paddingBottom: 1 }}>
+          <ChatInput
+            loading={loading}
+            handleSubmit={(entry) => {
+              const newTextHistory = [...textHistory, entry];
+              setTextHistory(newTextHistory);
+              setLoading(true);
+              request()
+                .post("query", { query: newTextHistory })
+                .then((res) => {
+                  console.log(res.data)
+                  setTextHistory(res.data);
+                  setLoading(false);
+                });
+            }}
+          />
+          <Typography
+            variant="subtitle1"
+            align="center"
+            sx={{ paddingTop: 1, paddingBottom: 1 }}
+          >
             DbGPT can something make mistakes. Check important info.
           </Typography>
-        </S.ChatInputWrapper>
       </S.Main>
     </div>
   );
