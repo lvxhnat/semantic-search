@@ -1,16 +1,14 @@
-import * as React from "react";
 import * as S from "./style";
-import { Typography } from "@mui/material";
 
-export type Conversers = "user" | "admin";
+export type Roles = "user" | "admin";
 
 export interface ChatBoxType {
-  user: Conversers;
-  text: string;
+  role: Roles;
+  content: string;
 }
 
 interface ChatBoxProps {
-  user: Conversers;
+  user: Roles;
   children?: string;
 }
 

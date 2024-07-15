@@ -20,6 +20,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
+import { request } from "../../common/services/request";
 
 export default function Home() {
   const theme = useTheme();
@@ -82,13 +83,17 @@ export default function Home() {
         <S.DrawerHeader />
         <S.ChatWrapper>
           {
-            textHistory.map((entry) => <ChatBox user={entry.user}>
-              {entry.text}
+            textHistory.map((entry) => <ChatBox user={entry.role}>
+              {entry.content}
             </ChatBox>)
           }
         </S.ChatWrapper>
         <S.ChatInputWrapper>
-          <ChatInput setTextHistory={setTextHistory}/>
+          <ChatInput handleSubmit={(entry) => {
+            const newTextHistory = [...textHistory, entry]
+            setTextHistory(newTextHistory);
+            request().post("query", { query: newTextHistory }).then((res) => console.log(res.data))
+          }}/>
           <Typography variant="subtitle1" align="center" sx={{ paddingTop: 1, paddingBottom: 1 }}>
             DbGPT can something make mistakes. Check important info.
           </Typography>

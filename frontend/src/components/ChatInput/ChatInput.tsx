@@ -5,20 +5,18 @@ import { InputAdornment } from "@mui/material";
 import { typographyTheme } from "../../common/theme/typography";
 
 interface ChatInputProps {
-  setTextHistory: (val: any) => void;
+  handleSubmit: (val: any) => void;
 }
 
 export default function ChatInput(props: ChatInputProps) {
   const [value, setValue] = React.useState<string>("");
 
   const handleSubmit = () => {
-    props.setTextHistory((prevTextHistory: any[]) => [
-      ...prevTextHistory,
-      {
-        user: "user",
-        text: value,
-      },
-    ]);
+    const entry = {
+      role: "user",
+      content: value,
+    }
+    props.handleSubmit(entry)
     setValue("")
   }
 
@@ -46,7 +44,7 @@ export default function ChatInput(props: ChatInputProps) {
       InputLabelProps={{
         style: { fontSize: typographyTheme.body1.fontSize },
       }} // font size of input label
-      value={value ?? 0}
+      value={value ?? ""}
       onChange={(event) => {
         setValue(event.target.value ?? "");
       }}
