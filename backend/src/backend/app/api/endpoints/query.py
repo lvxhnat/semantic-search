@@ -67,7 +67,7 @@ def search_term(params: QueryParams):
 
     query = [item.model_dump(mode="json") for item in params.query]
 
-    prompt = craft_prompt(query[-1].content)
+    prompt = craft_prompt(query[-1]["content"])
     output = pipe(query[:-1] + [prompt], **generation_args)
     # Add the query
     query.append({"role": "system", "content": output[0]["generated_text"]})
