@@ -1,5 +1,8 @@
 import * as React from "react";
-import { createTheme, ThemeProvider as ThemeMUIProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider as ThemeMUIProvider,
+} from "@mui/material/styles";
 import { FC, useEffect } from "react";
 import { ThemeMode } from "../common/types";
 import { useThemeStore } from "../store/theme";

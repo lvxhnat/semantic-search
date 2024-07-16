@@ -1,5 +1,5 @@
 import * as S from "./style";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
 
 export type Roles = "user" | "system";
 
@@ -10,12 +10,15 @@ export interface ChatBoxType {
 
 interface ChatBoxProps {
   user: Roles;
-  children?: string;
+  align?: string;
+  children?: any;
+  [others: string]: any;
 }
 
 export default function ChatBox(props: ChatBoxProps) {
   return (
     <S.ChatBoxWrapper
+      {...props.others}
       sx={{
         width: "100%",
         display: "flex",
@@ -23,9 +26,11 @@ export default function ChatBox(props: ChatBoxProps) {
         justifyContent: props.user === "user" ? "flex-end" : "flex-start",
       }}
     >
-      {props.user === "system" ? <img src={Logo} alt="" width="35px" style={{ marginTop: "10px" }} /> : null}
+      {props.user === "system" ? (
+        <img src={Logo} alt="" width="35px" style={{ marginTop: "10px" }} />
+      ) : null}
       <S.ChatBox paragraph role={props.user}>
-          {props.children}
+        {props.children}
       </S.ChatBox>
     </S.ChatBoxWrapper>
   );

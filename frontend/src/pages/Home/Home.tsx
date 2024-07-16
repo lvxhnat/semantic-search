@@ -22,10 +22,12 @@ import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
 import { request } from "../../common/services/request";
 import Logo from "../../assets/logo.png";
+import { Skeleton } from "@mui/material";
 
 export default function Home() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const chatRef = React.useRef<HTMLDivElement>(null);
   const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([
     {
       role: "system",
@@ -42,6 +44,12 @@ export default function Home() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [textHistory]);
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
@@ -92,32 +100,58 @@ export default function Home() {
       <S.Main open={open}>
         <S.DrawerHeader />
         <S.ChatWrapper>
-          {textHistory.slice(1, textHistory.length).map((entry, i) => (
-            <ChatBox key={`${entry.role}-${i}`} user={entry.role}>{entry.content}</ChatBox>
-          ))}
+          {textHistory.slice(1, textHistory.length).map((entry, i) => {
+            if (i === textHistory.length - 1)
+              return (
+                <ChatBox
+                  key={`${entry.role}-${i}`}
+                  user={entry.role}
+                  ref={chatRef}
+                >
+                  {entry.content}
+                </ChatBox>
+              );
+            else
+              return (
+                <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
+                  {entry.content}
+                </ChatBox>
+              );
+          })}
+          {loading ? (
+            <ChatBox user={"system"}>
+              <div style={{ paddingTop: "21px" }} />
+              <Skeleton
+                sx={{ bgcolor: "grey.800" }}
+                variant="circular"
+                width="15px"
+                height="15px"
+              />
+            </ChatBox>
+          ) : null}
+          <div ref={chatRef}></div>
         </S.ChatWrapper>
-          <ChatInput
-            loading={loading}
-            handleSubmit={(entry) => {
-              const newTextHistory = [...textHistory, entry];
-              setTextHistory(newTextHistory);
-              setLoading(true);
-              request()
-                .post("query", { query: newTextHistory })
-                .then((res) => {
-                  console.log(res.data)
-                  setTextHistory(res.data);
-                  setLoading(false);
-                });
-            }}
-          />
-          <Typography
-            variant="subtitle1"
-            align="center"
-            sx={{ paddingTop: 1, paddingBottom: 1 }}
-          >
-            DbGPT can something make mistakes. Check important info.
-          </Typography>
+        <ChatInput
+          loading={loading}
+          handleSubmit={(entry) => {
+            const newTextHistory = [...textHistory, entry];
+            setTextHistory(newTextHistory);
+            setLoading(true);
+            request()
+              .post("query", { query: newTextHistory })
+              .then((res) => {
+                setTextHistory(res.data);
+                setLoading(false);
+              });
+          }}
+        />
+        <Typography
+          variant="subtitle1"
+          align="center"
+          sx={{ paddingTop: 1, paddingBottom: 1 }}
+        >
+          DbGPT can something make mistakes. Check important info.
+        </Typography>
       </S.Main>
     </div>
   );

@@ -8,9 +8,9 @@ const root = ReactDOM.createRoot(
 
 function ThemedApp() {
   return (
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   );
 }
 

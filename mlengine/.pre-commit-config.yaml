@@ -9,7 +9,7 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
-        args: ['--testmon', "-n", "auto", "--cov=src/mlengine", "tests/"]
+        args: ["--testmon", "-n", "auto", "--cov=src/mlengine", "tests/"]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
@@ -24,7 +24,7 @@ repos:
     rev: 5.10.1
     hooks:
       - id: isort
-        args: [ "--profile", "black", "--filter-files" ]
+        args: ["--profile", "black", "--filter-files"]
 
   # Code formatter
   - repo: https://github.com/psf/black
@@ -45,4 +45,11 @@ repos:
     hooks:
       - id: vulture
         language_version: python3.9
-        args: ['.', '--exclude', 'venv,.venv,env,tests,base_class.py,*/configs/*,tasks.py,base_class.py', '--min-confidence', '90']
+        args:
+          [
+            ".",
+            "--exclude",
+            "venv,.venv,env,tests,base_class.py,*/configs/*,tasks.py,base_class.py",
+            "--min-confidence",
+            "90",
+          ]

@@ -3,7 +3,7 @@ import * as S from "./style";
 import SendIcon from "@mui/icons-material/Send";
 import { InputAdornment } from "@mui/material";
 import { typographyTheme } from "../../common/theme/typography";
-import StopCircleIcon from '@mui/icons-material/StopCircle';
+import StopCircleIcon from "@mui/icons-material/StopCircle";
 
 interface ChatInputProps {
   handleSubmit: (val: any) => void;
@@ -17,10 +17,10 @@ export default function ChatInput(props: ChatInputProps) {
     const entry = {
       role: "user",
       content: value,
-    }
-    props.handleSubmit(entry)
-    setValue("")
-  }
+    };
+    props.handleSubmit(entry);
+    setValue("");
+  };
 
   return (
     <S.StyledTextField
@@ -30,10 +30,7 @@ export default function ChatInput(props: ChatInputProps) {
       InputProps={{
         disableUnderline: true,
         endAdornment: (
-          <S.StyledIconButton
-            disableFocusRipple
-            onClick={handleSubmit}
-          >
+          <S.StyledIconButton disableFocusRipple onClick={handleSubmit}>
             <InputAdornment position="start">
               {props.loading ? <StopCircleIcon /> : <SendIcon />}
             </InputAdornment>
@@ -51,7 +48,7 @@ export default function ChatInput(props: ChatInputProps) {
         setValue(event.target.value ?? "");
       }}
       onKeyDown={(e) => {
-        if (e.keyCode === 13) handleSubmit()
+        if (e.keyCode === 13) handleSubmit();
       }}
     />
   );
