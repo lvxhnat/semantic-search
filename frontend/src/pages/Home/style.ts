@@ -1,9 +1,26 @@
 import { styled, useTheme } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { Drawer } from "@mui/material";
+import { Drawer, Typography } from "@mui/material";
 import { ColorsEnum } from "../../common/theme";
 
 export const drawerWidth = 300;
+
+export const LogoWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: 5,
+  alignItems: "center",
+}));
+
+export const Container = styled("div")(({ theme }) => ({
+  display: "flex",
+  height: "100%",
+}));
+
+export const FooterTypography = styled(Typography)(({ theme }) => ({
+  paddingTop: 1,
+  paddingBottom: 1,
+  textAlign: "center",
+}));
 
 export const ChatWrapper = styled("div")(({ theme }) => ({
   height: "100%",

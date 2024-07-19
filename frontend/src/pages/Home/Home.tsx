@@ -52,7 +52,7 @@ export default function Home() {
   }, [textHistory]);
 
   return (
-    <div style={{ display: "flex", height: "100%" }}>
+    <S.Container>
       <CssBaseline />
       <S.AppBar position="fixed" open={open}>
         <Toolbar>
@@ -65,12 +65,12 @@ export default function Home() {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+          <S.LogoWrapper>
             <img src={Logo} alt="" width="50px" />
             <Typography variant="h6" noWrap component="div">
               DbGPT
             </Typography>
-          </div>
+          </S.LogoWrapper>
         </Toolbar>
       </S.AppBar>
       <S.StyledDrawer variant="persistent" anchor="left" open={open}>
@@ -145,14 +145,12 @@ export default function Home() {
               });
           }}
         />
-        <Typography
+        <S.FooterTypography
           variant="subtitle1"
-          align="center"
-          sx={{ paddingTop: 1, paddingBottom: 1 }}
         >
-          DbGPT can something make mistakes. Check important info.
-        </Typography>
+          DbGPT can sometime make mistakes. Check important info.
+        </S.FooterTypography>
       </S.Main>
-    </div>
+      </S.Container>
   );
 }
