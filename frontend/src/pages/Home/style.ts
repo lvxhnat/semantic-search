@@ -17,8 +17,8 @@ export const Container = styled("div")(({ theme }) => ({
 }));
 
 export const FooterTypography = styled(Typography)(({ theme }) => ({
-  paddingTop: 1,
-  paddingBottom: 1,
+  paddingTop: 2,
+  paddingBottom: 2,
   textAlign: "center",
 }));
 
@@ -95,4 +95,16 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
+}));
+
+export const LeftDrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  width: "50%",
+  justifyContent: "flex-start"
+}));
+
+export const RightDrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  width: "50%",
+  justifyContent: "flex-end"
 }));
