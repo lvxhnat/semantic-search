@@ -23,6 +23,9 @@ export const FooterTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export const ChatWrapper = styled("div")(({ theme }) => ({
+  gap: 20,
+  display: "flex",
+  flexDirection: "column",
   height: "100%",
   overflowY: "auto",
   "::-webkit-scrollbar": {

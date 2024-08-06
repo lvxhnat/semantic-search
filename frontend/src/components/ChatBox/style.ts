@@ -11,9 +11,9 @@ export const ChatBoxWrapper = styled("div")(({ theme }) => ({
 interface ChatBoxProps {
   role: Roles;
 }
-export const ChatBox = styled(Typography)<ChatBoxProps>(({ theme, role }) => ({
-  maxWidth: "70%",
-  whiteSpace: "pre-line",
+export const ChatBox = styled("div")<ChatBoxProps>(({ theme, role }) => ({
+  gap: 20,
+  maxWidth: "80%",
   color: theme.palette.mode === "dark" ? ColorsEnum.white : ColorsEnum.black,
   backgroundColor:
     role === "system"

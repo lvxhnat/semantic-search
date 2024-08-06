@@ -108,9 +108,7 @@ export default function Home() {
         return {
           uuid: col,
           text:
-            jsonItem && jsonItem.content
-              ? jsonItem.content
-              : "Current Chat",
+            jsonItem && jsonItem.content ? jsonItem.content : "Current Chat",
           lastUpdated: json[col].lastUpdated,
         };
       });
@@ -164,7 +162,10 @@ export default function Home() {
         <Divider />
         <List>
           <ListItem>
-            <Typography variant="subtitle1" fontWeight="bold"> Chat History </Typography>
+            <Typography variant="subtitle1" color="grey">
+              {" "}
+              Chat History{" "}
+            </Typography>
           </ListItem>
           {availableChats.map((entry) => {
             return (
@@ -180,7 +181,9 @@ export default function Home() {
                 }}
               >
                 <ListItemButton>
-                  <Typography variant="subtitle2" noWrap>{entry.text}</Typography>
+                  <Typography variant="subtitle2" noWrap>
+                    {entry.text}
+                  </Typography>
                 </ListItemButton>
               </ListItem>
             );
@@ -190,32 +193,41 @@ export default function Home() {
       <S.Main open={open}>
         <S.DrawerHeader />
         <S.ChatWrapper>
-          {textHistory.slice(1, textHistory.length).map((entry: ChatBoxType, i) => {
-            if (i === textHistory.length - 1)
-              return (
-                <ChatBox
-                  key={`${entry.role}-${i}`}
-                  user={entry.role}
-                  ref={chatRef}
-                >
-                  {entry.content}
-                </ChatBox>
-              );
-            else
-              return (
-                <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
-                  {entry.content}
-                  {(entry.reference_ids && Object.keys(entry.reference_ids).length > 0) ?  <ChatTable referenceIds={entry.reference_ids} /> : null}
-                </ChatBox>
-              );
-          })}
+          {textHistory
+            .slice(1, textHistory.length)
+            .map((entry: ChatBoxType, i) => {
+              if (i === textHistory.length - 1)
+                return (
+                  <ChatBox
+                    key={`${entry.role}-${i}`}
+                    user={entry.role}
+                    ref={chatRef}
+                  >
+                    {entry.content}
+                  </ChatBox>
+                );
+              else
+                return (
+                  <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
+                    <Typography align="left">{entry.content}</Typography>
+                    {entry.reference_ids &&
+                    Object.keys(entry.reference_ids).length > 0 ? (
+                      <div style={{ width: "100%" }}>
+                        <Typography paragraph>
+                          Here are some relevant entries in the database:
+                        </Typography>
+                        <ChatTable referenceIds={entry.reference_ids} />
+                      </div>
+                    ) : null}
+                  </ChatBox>
+                );
+            })}
           {error !== "" ? (
             <Alert severity="error">{error}</Alert>
           ) : loading ? (
             <ChatBox user={"system"}>
-              <div style={{ paddingTop: "21px" }} />
               <Skeleton
-                sx={{ bgcolor: "grey.800" }}
+                sx={{ bgcolor: "grey.800", marginTop: 0.5 }}
                 variant="circular"
                 width="15px"
                 height="15px"
@@ -234,6 +246,7 @@ export default function Home() {
             request()
               .post("query", { query: newTextHistory })
               .then((res) => {
+                console.log(res.data);
                 setTextHistory(res.data);
                 setLoading(false);
               })

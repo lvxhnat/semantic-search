@@ -34,7 +34,7 @@ export default function ChatBox(props: ChatBoxProps) {
       {props.user === "system" ? (
         <img src={Logo} alt="" width="35px" style={{ marginTop: "10px" }} />
       ) : null}
-      <S.ChatBox paragraph role={props.user}>
+      <S.ChatBox role={props.user}>
         {props.children}
       </S.ChatBox>
     </S.ChatBoxWrapper>
