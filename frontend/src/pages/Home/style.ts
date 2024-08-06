@@ -40,7 +40,7 @@ export const Main = styled("main", {
   display: "flex",
   flexDirection: "column",
   overflowY: "hidden",
-  padding: `${theme.spacing(3)} ${theme.spacing(15)}`,
+  padding: `${theme.spacing(1)} ${theme.spacing(10)}`,
   paddingBottom: 0,
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,

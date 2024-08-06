@@ -3,9 +3,14 @@ import Logo from "../../assets/logo.png";
 
 export type Roles = "user" | "system";
 
+export interface ReferenceIds {
+  [uuid: string]: number
+}
+
 export interface ChatBoxType {
   role: Roles;
   content: string;
+  reference_ids: ReferenceIds; // These will store the uuids of the table entries that the llm has referenced
 }
 
 interface ChatBoxProps {

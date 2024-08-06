@@ -19,11 +19,12 @@ export const ChatBox = styled(Typography)<ChatBoxProps>(({ theme, role }) => ({
     role === "system"
       ? "transparent"
       : theme.palette.mode === "dark"
-      ? ColorsEnum.darkGrey
-      : ColorsEnum.lightGrey,
+        ? ColorsEnum.darkGrey
+        : ColorsEnum.lightGrey,
   padding: `${theme.spacing(1)} ${theme.spacing(3)}`,
   borderRadius: 20,
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
 }));
