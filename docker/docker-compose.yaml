@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build:
+      context: ../
+      dockerfile: docker/frontend/Dockerfile
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:1236
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    networks:
+      - base
+  backend:
+    build:
+      context: ../
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - 1236:1236
+    networks:
+      - base
+networks:
+  base:
+    driver: bridge
