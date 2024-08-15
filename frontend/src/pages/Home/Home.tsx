@@ -191,20 +191,23 @@ export default function Home() {
           {textHistory
             .slice(1, textHistory.length)
             .map((entry: ChatBoxType, i) => {
-              if (i === textHistory.length - 1)
+              const text = entry.content.replace(/(\s*\d+\.\s)/g, '\n$1').replaceAll("\n\n", "\n");
+              if (i === textHistory.length - 1) {
                 return (
                   <ChatBox
                     key={`${entry.role}-${i}`}
                     user={entry.role}
                     ref={chatRef}
                   >
-                    {entry.content}
+                    <Typography  style={{whiteSpace: 'pre-line'}}>
+                    {text}
+                    </Typography>
                   </ChatBox>
                 );
-              else
+              } else
                 return (
                   <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
-                    <Typography align="left">{entry.content}</Typography>
+                    <Typography align="left" style={{whiteSpace: 'pre-line'}}>{text}</Typography>
                     {entry.reference_ids &&
                     Object.keys(entry.reference_ids).length > 0 ? (
                       <div style={{ width: "100%" }}>
