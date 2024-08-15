@@ -10,9 +10,8 @@ router = APIRouter()
 
 @router.post("/query")
 def search_term(params: QueryParams):
-
     generation_args = {
-        "max_new_tokens": 1000,
+        "max_new_tokens": 500,
         "return_full_text": False,
         "temperature": 0.0,
         "output_scores": True, 
@@ -20,14 +19,13 @@ def search_term(params: QueryParams):
     }
 
     query = [q.model_dump(mode = "json") for q in params.query]
-
-    prompt, reference_ids = craft_prompt(query[-1]["content"], df, chroma_collection)
-    output = pipe(prompt, **generation_args)
+    
+    with torch.no_grad():
+        prompt, reference_ids = craft_prompt(query[-1]["content"], df, chroma_collection)
+        output = pipe(prompt, **generation_args)
     torch.cuda.empty_cache()
-
     output_text = output[0]['generated_text']
     query.append({"role": "system", "content": output_text, "reference_ids": reference_ids})
-    print(query[-1])
     return query
 
 

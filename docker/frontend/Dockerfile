@@ -1,5 +1,5 @@
 FROM debian:buster-slim
-FROM node:14.17.3 as build-stage
+FROM node:16.20.2 as build-stage
 
 WORKDIR /app/frontend
 ENV PATH /app/node_modules/.bin:$PATH

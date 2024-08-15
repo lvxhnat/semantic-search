@@ -19,7 +19,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 
 base_requirements = {
+    "accelerate",
+    "torch",
     "pandas",
+    "transformers",
     "aiohttp",
     "celery",
     "fastapi",
@@ -28,9 +31,6 @@ base_requirements = {
     "uvicorn",
     "websockets",
     "kombu",
-    "xmltodict",
-    "ib_insync",
-    "pymongo",
 }
 
 dev_requirements = {

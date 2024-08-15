@@ -1,7 +1,9 @@
 import re
+import torch
 import numpy as np
 import pandas as pd
 from typing import List
+from backend.app.services.model import reranker_tokenizer, reranker_model
 
 def clean_text(text: str):
     pattern = re.compile(r'### Pandas version checks.*?### Reproducible Example', re.DOTALL)
@@ -16,12 +18,8 @@ def clean_text(text: str):
     return cleaned_text
 
 
-def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: int = 2, distance_threshold = 0.1) -> str:
+def query_chroma_collection(df: pd.DataFrame, query: str, chroma_collection, min_ref_docs: int = 2, distance_threshold = 0.1) -> List[str]:
 
-    """
-    min_ref_docs : minimum number of documents we want the RAG model to reference.
-    """
-    
     results = chroma_collection.query(
         query_texts = [query],  # Chroma will embed this for you
         n_results = 10,  # How many results to return
@@ -49,6 +47,33 @@ def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: 
     if len(relevant_documents) == 0:
         relevant_documents = documents[:1]  # At least take the top result if none within the threshold
 
+    return distance_ids, relevant_documents
+
+def rerank_documents(query, relevant_documents: List[str]) -> List[str]:
+    pairs = [[query, passage] for passage in relevant_documents]
+    # We add torch no grad to prevent gradient from being calculated unecessarily which will lead to OOM error
+    with torch.no_grad():
+        inputs = reranker_tokenizer(pairs, padding=True, truncation=True, return_tensors='pt', max_length=512)
+        outputs = reranker_model(**inputs, return_dict=True)
+        scores = outputs.logits.squeeze().float()  # Adjust based on model output shape
+    torch.cuda.empty_cache()
+    # Pair the scores with the other list
+    paired_list = list(zip(scores, relevant_documents))
+    # Sort the pairs based on the scores in descending order
+    sorted_pairs = sorted(paired_list, key=lambda x: x[0], reverse=True)
+    # Separate the sorted pairs back into two lists
+    _, l = zip(*sorted_pairs)
+    return l
+
+def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: int = 2, distance_threshold = 0.1) -> str:
+
+    """
+    min_ref_docs : minimum number of documents we want the RAG model to reference.
+    """
+    
+    distance_ids, relevant_documents = query_chroma_collection(df, query, chroma_collection, min_ref_docs, distance_threshold)
+    relevant_documents = rerank_documents(query, relevant_documents)
+
     # Join results with new lines for the context
     context = "\n".join(relevant_documents) 
 
@@ -59,7 +84,7 @@ def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: 
             "content": (
                 "Answer the following question using only the provided context. Do not assume or add information beyond what is in the context. \n"
                 "If the context does not contain sufficient information to answer the question or no context is provided at all, explicitly state that the context is insufficient and provide your own suggestions with a clear warning. \n"
-                "The context are entries in a database, so your answer should say instead that you had referenced the database. \n"
+                "The context are entries in a database sorted in descending relevance. \n"
                 "In your own understanding, if the description of the issue is vague, ask for clarifications \n"
                 "Context:\n"
                 "{context}\n\n"
