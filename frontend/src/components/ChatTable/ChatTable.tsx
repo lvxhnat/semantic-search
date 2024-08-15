@@ -50,7 +50,6 @@ interface ChatTableProps {
 export default function ChatTable(props: ChatTableProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [entries, setEntries] = React.useState<DbEntries[]>([]);
-    console.log(props.referenceIds)
   React.useEffect(() => {
     setLoading(true);
     request()
@@ -103,15 +102,6 @@ export default function ChatTable(props: ChatTableProps) {
                         </TableCell>
                       );
                     })}
-                    <TableCell>
-                          <Typography
-                            variant="subtitle2"
-                            noWrap
-                            color="inherit"
-                          >
-                            {props.referenceIds[row.node_id]}
-                          </Typography>
-                        </TableCell>
                   </S.StyledTableRow>
                 );
               })}

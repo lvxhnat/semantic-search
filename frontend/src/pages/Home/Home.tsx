@@ -121,15 +121,10 @@ export default function Home() {
   };
 
   const handleOpenNewChat = () => {
-    const id: string = uuid();
-    setSelectedUuid(id);
+    setError("");
+    setLoading(false);
+    setSelectedUuid(uuid());
     setTextHistory([defaultValue]);
-  };
-
-  const handleOpenChat = (key: string) => {
-    const text = localStorage.getItem(key);
-    console.log(text);
-    // setTextHistory([text])
   };
 
   React.useEffect(() => {
@@ -246,7 +241,6 @@ export default function Home() {
             request()
               .post("query", { query: newTextHistory })
               .then((res) => {
-                console.log(res.data);
                 setTextHistory(res.data);
                 setLoading(false);
               })
