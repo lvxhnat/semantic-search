@@ -8,7 +8,8 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="cuda",
     torch_dtype=torch.float16, # Reduce memory usage
     trust_remote_code=True, 
-    low_cpu_mem_usage=True
+    low_cpu_mem_usage=True,
+    attn_implementation="eager"
 )
 model.gradient_checkpointing_enable()
 

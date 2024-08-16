@@ -19,6 +19,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 
 base_requirements = {
+    "flash_attn",
     "accelerate",
     "torch",
     "pandas",
