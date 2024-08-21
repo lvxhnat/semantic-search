@@ -10,9 +10,7 @@ interface HomeToolbarProps {
 }
 
 export const HomeToolbar = (props: HomeToolbarProps) => {
-  const handleDrawerOpen = () => {
-    props.setOpen(true);
-  };
+  const handleDrawerOpen = () => props.setOpen(true);
 
   return (
     <S.AppBar position="fixed" open={props.open}>

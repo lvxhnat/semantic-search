@@ -1,16 +1,23 @@
 # Use NVIDIA CUDA base image
-FROM pytorch/pytorch:latest
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
-# Install required packages
-RUN apt-get update \
-     && apt-get install -y \
-        libgl1-mesa-glx \
-        libx11-xcb1 \
-     && apt-get clean all \
-     && rm -r /var/lib/apt/lists/*
-     
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install necessary packages including vi
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    vim \
+    python3.10 \
+    python3-pip \
+    python3-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set Python3 as the default python
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+# Upgrade pip
+RUN pip install --upgrade pip
 
 WORKDIR /app/backend
 

@@ -15,12 +15,14 @@ export default function ChatInput(props: ChatInputProps) {
   const [value, setValue] = React.useState<string>("");
 
   const handleSubmit = () => {
-    const entry = {
-      role: "user",
-      content: value,
-    };
-    props.handleSubmit(entry);
-    setValue("");
+    if (!(value.trim() === "")) {
+      const entry = {
+        role: "user",
+        content: value,
+      };
+      props.handleSubmit(entry);
+      setValue("");
+    }
   };
 
   return (
