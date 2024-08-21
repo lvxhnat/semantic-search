@@ -17,7 +17,6 @@ with open(pathlib.Path(here, f"src/__init__.py"), encoding="utf-8") as f:
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-
 base_requirements = {
     "sqlalchemy",
     "psycopg2",
