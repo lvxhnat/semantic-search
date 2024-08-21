@@ -1,3 +1,3 @@
 import ChatTable from "./ChatTable";
 
-export default ChatTable
+export default ChatTable;

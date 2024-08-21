@@ -1,3 +1,3 @@
 import { HomeToolbar } from "./HomeToolbar";
 
-export default HomeToolbar
+export default HomeToolbar;

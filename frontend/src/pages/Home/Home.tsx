@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as S from "./style";
-import axios, { CancelTokenSource } from 'axios';
+import axios, { CancelTokenSource } from "axios";
 import { v4 as uuid } from "uuid";
 import { useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -29,7 +29,6 @@ const defaultValue: ChatBoxType = {
   reference_ids: {},
 };
 
-
 export default function Home() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -40,7 +39,8 @@ export default function Home() {
   const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([
     defaultValue,
   ]);
-  const [cancelTokenSource, setCancelTokenSource] = React.useState<CancelTokenSource | null>(null);
+  const [cancelTokenSource, setCancelTokenSource] =
+    React.useState<CancelTokenSource | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -158,7 +158,9 @@ export default function Home() {
           {textHistory
             .slice(1, textHistory.length)
             .map((entry: ChatBoxType, i) => {
-              const text = entry.content.replace(/(\s*\d+\.\s)/g, '\n$1').replaceAll("\n\n", "\n");
+              const text = entry.content
+                .replace(/(\s*\d+\.\s)/g, "\n$1")
+                .replaceAll("\n\n", "\n");
               if (i === textHistory.length - 1) {
                 return (
                   <ChatBox
@@ -166,15 +168,17 @@ export default function Home() {
                     user={entry.role}
                     ref={chatRef}
                   >
-                    <Typography  style={{whiteSpace: 'pre-line'}}>
-                    {text}
+                    <Typography style={{ whiteSpace: "pre-line" }}>
+                      {text}
                     </Typography>
                   </ChatBox>
                 );
               } else
                 return (
                   <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
-                    <Typography align="left" style={{whiteSpace: 'pre-line'}}>{text}</Typography>
+                    <Typography align="left" style={{ whiteSpace: "pre-line" }}>
+                      {text}
+                    </Typography>
                     {entry.reference_ids &&
                     Object.keys(entry.reference_ids).length > 0 ? (
                       <div style={{ width: "100%" }}>
@@ -203,29 +207,38 @@ export default function Home() {
         </S.ChatWrapper>
         <ChatInput
           loading={loading}
-          handleCancel={() => (cancelTokenSource) ? cancelTokenSource.cancel('Operation canceled by user') : null}
+          handleCancel={() =>
+            cancelTokenSource
+              ? cancelTokenSource.cancel("Operation canceled by user")
+              : null
+          }
           handleSubmit={(entry) => {
             const newTextHistory = [...textHistory, entry];
-            const source = axios.CancelToken.source()
-            setCancelTokenSource(source)
+            const source = axios.CancelToken.source();
+            setCancelTokenSource(source);
             setError("");
             setTextHistory(newTextHistory);
             setLoading(true);
             request()
-              .post("query", { query: newTextHistory }, { cancelToken: source.token })
+              .post(
+                "query",
+                { query: newTextHistory },
+                { cancelToken: source.token }
+              )
               .then((res) => {
                 setTextHistory(res.data);
                 setLoading(false);
               })
               .catch((err) => {
                 setLoading(false);
-                if (axios.isCancel(err)) { console.log(err) }
-                else {
+                if (axios.isCancel(err)) {
+                  console.log(err);
+                } else {
                   setError(
                     `Exception encountered when running model: ${err.message}`
                   );
                 }
-              })
+              });
           }}
         />
         <S.FooterTypography variant="subtitle2">

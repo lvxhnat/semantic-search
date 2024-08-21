@@ -24,7 +24,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    environment: 
+    environment:
       - BACKEND_CHROMADB_PATH=./data/chromadb
       - BACKEND_DATA_SOURCE=csv
       - BACKEND_DATA_SOURCE_PATH=./data/202407251532-pandas-cleaned.csv

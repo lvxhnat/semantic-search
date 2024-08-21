@@ -71,11 +71,11 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
 export const LeftDrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   width: "50%",
-  justifyContent: "flex-start"
+  justifyContent: "flex-start",
 }));
 
 export const RightDrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   width: "50%",
-  justifyContent: "flex-end"
+  justifyContent: "flex-end",
 }));

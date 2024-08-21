@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.png";
 export type Roles = "user" | "system";
 
 export interface ReferenceIds {
-  [uuid: string]: number
+  [uuid: string]: number;
 }
 
 export interface ChatBoxType {
@@ -34,9 +34,7 @@ export default function ChatBox(props: ChatBoxProps) {
       {props.user === "system" ? (
         <img src={Logo} alt="" width="35px" style={{ marginTop: "10px" }} />
       ) : null}
-      <S.ChatBox role={props.user}>
-        {props.children}
-      </S.ChatBox>
+      <S.ChatBox role={props.user}>{props.children}</S.ChatBox>
     </S.ChatBoxWrapper>
   );
 }
