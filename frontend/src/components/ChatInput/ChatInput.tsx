@@ -7,6 +7,7 @@ import StopCircleIcon from "@mui/icons-material/StopCircle";
 
 interface ChatInputProps {
   handleSubmit: (val: any) => void;
+  handleCancel: () => void;
   loading?: boolean;
 }
 
@@ -32,7 +33,7 @@ export default function ChatInput(props: ChatInputProps) {
         endAdornment: (
           <S.StyledIconButton disableFocusRipple onClick={handleSubmit}>
             <InputAdornment position="start">
-              {props.loading ? <StopCircleIcon /> : <SendIcon />}
+              {props.loading ? <StopCircleIcon onClick={props.handleCancel}/> : <SendIcon />}
             </InputAdornment>
           </S.StyledIconButton>
         ),

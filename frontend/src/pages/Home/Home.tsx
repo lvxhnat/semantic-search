@@ -1,14 +1,13 @@
 import * as React from "react";
 import * as S from "./style";
+import axios, { CancelTokenSource } from 'axios';
 import { v4 as uuid } from "uuid";
 import { useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -18,10 +17,10 @@ import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
 import { request } from "../../common/services/request";
-import Logo from "../../assets/logo.png";
 import { Alert, Skeleton } from "@mui/material";
 import { SEMANTIC_SEARCH_KEY } from "../../common/constants";
 import ChatTable from "../../components/ChatTable";
+import HomeToolbar from "../../components/HomeToolbar";
 
 const defaultValue: ChatBoxType = {
   role: "system",
@@ -30,38 +29,6 @@ const defaultValue: ChatBoxType = {
   reference_ids: {},
 };
 
-interface HomeToolbarProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-
-const HomeToolbar = (props: HomeToolbarProps) => {
-  const handleDrawerOpen = () => {
-    props.setOpen(true);
-  };
-
-  return (
-    <S.AppBar position="fixed" open={props.open}>
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={{ mr: 2, ...(props.open && { display: "none" }) }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <S.LogoWrapper>
-          <img src={Logo} alt="" width="50px" />
-          <Typography variant="h6" noWrap component="div">
-            DbGPT
-          </Typography>
-        </S.LogoWrapper>
-      </Toolbar>
-    </S.AppBar>
-  );
-};
 
 export default function Home() {
   const theme = useTheme();
@@ -73,10 +40,10 @@ export default function Home() {
   const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([
     defaultValue,
   ]);
+  const [cancelTokenSource, setCancelTokenSource] = React.useState<CancelTokenSource | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    console.log(textHistory);
     // Text history more than 1 so we do not save chats that have been initialised but not spoken to.
     const obj = localStorage.getItem(SEMANTIC_SEARCH_KEY);
     if (textHistory.length >= 2) {
@@ -236,22 +203,29 @@ export default function Home() {
         </S.ChatWrapper>
         <ChatInput
           loading={loading}
+          handleCancel={() => (cancelTokenSource) ? cancelTokenSource.cancel('Operation canceled by user') : null}
           handleSubmit={(entry) => {
             const newTextHistory = [...textHistory, entry];
+            const source = axios.CancelToken.source()
+            setCancelTokenSource(source)
             setError("");
             setTextHistory(newTextHistory);
             setLoading(true);
             request()
-              .post("query", { query: newTextHistory })
+              .post("query", { query: newTextHistory }, { cancelToken: source.token })
               .then((res) => {
                 setTextHistory(res.data);
                 setLoading(false);
               })
               .catch((err) => {
-                setError(
-                  `Exception encountered when running model: ${err.message}`
-                );
-              });
+                setLoading(false);
+                if (axios.isCancel(err)) { console.log(err) }
+                else {
+                  setError(
+                    `Exception encountered when running model: ${err.message}`
+                  );
+                }
+              })
           }}
         />
         <S.FooterTypography variant="subtitle2">
