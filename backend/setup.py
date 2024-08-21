@@ -18,17 +18,19 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 base_requirements = {
-    "sqlalchemy",
-    "psycopg2",
     "accelerate",
     "pandas",
     "aiohttp",
+    "transformers",
+    "chromadb",
     "fastapi",
     "pydantic-settings",
     "python-dotenv",
     "uvicorn",
     "websockets",
     "kombu",
+    "SQLAlchemy",
+    "psycopg2-binary",
 }
 
 dev_requirements = {
