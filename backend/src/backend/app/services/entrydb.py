@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from sqlalchemy import engine
 from dotenv import load_dotenv
 from backend.app.common.utils import clean_text
 
@@ -17,3 +18,9 @@ if SOURCE == "csv":
         .dropna(subset = ['body'])
         .assign(cleaned_body = lambda d: d["body"].apply(clean_text))
     )
+elif SOURCE == "postgres":
+    engine = engine.create_engine(SOURCE_PATH, echo=False)
+    SOURCE_TABLE = os.getenv("BACKEND_DATA_SOURCE_TABLE")
+    df = pd.read_sql(f"SELECT * FROM {SOURCE_TABLE}", engine)
+else: 
+    raise ValueError(f"Source or Source Path not recognised. Please specify postgres or csv.")
