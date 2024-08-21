@@ -24,7 +24,6 @@ base_requirements = {
     "accelerate",
     "pandas",
     "aiohttp",
-    "celery",
     "fastapi",
     "pydantic-settings",
     "python-dotenv",
