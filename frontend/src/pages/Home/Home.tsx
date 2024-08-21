@@ -66,7 +66,7 @@ export default function Home() {
         localStorage.setItem(SEMANTIC_SEARCH_KEY, JSON.stringify(json));
       }
     }
-    // This is the object that retrieves the side bar
+
     if (obj) {
       const json = JSON.parse(obj!);
       const chatView = Object.keys(json).map((col) => {

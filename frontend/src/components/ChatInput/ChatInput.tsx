@@ -31,13 +31,13 @@ export default function ChatInput(props: ChatInputProps) {
       InputProps={{
         disableUnderline: true,
         endAdornment: (
-          <S.StyledIconButton disableFocusRipple onClick={handleSubmit}>
+          <S.StyledIconButton
+            disabled={value === "" && !props.loading}
+            disableFocusRipple
+            onClick={props.loading ? props.handleCancel : props.handleSubmit}
+          >
             <InputAdornment position="start">
-              {props.loading ? (
-                <StopCircleIcon onClick={props.handleCancel} />
-              ) : (
-                <SendIcon />
-              )}
+              {props.loading ? <StopCircleIcon /> : <SendIcon />}
             </InputAdornment>
           </S.StyledIconButton>
         ),
