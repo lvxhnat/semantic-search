@@ -1,16 +1,19 @@
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer,AutoModelForSequenceClassification,  pipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer,AutoModelForSequenceClassification,  pipeline, QuantoConfig
 
 torch.random.manual_seed(0)
+
+quantization_config = QuantoConfig(weights="int8")
 
 model = AutoModelForCausalLM.from_pretrained(
     "microsoft/Phi-3-mini-128k-instruct",
     device_map="cuda",
-    torch_dtype=torch.float16, # Reduce memory usage
+    torch_dtype=torch.bfloat16, # Reduce memory usage
     trust_remote_code=True, 
-    low_cpu_mem_usage=True,
-    attn_implementation="eager"
+    low_cpu_mem_usage=True, 
+    quantization_config=quantization_config
 )
+
 model.gradient_checkpointing_enable()
 
 tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-128k-instruct", torch_dtype=torch.float16, model_max_length=256)

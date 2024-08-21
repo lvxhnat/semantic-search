@@ -19,12 +19,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 
 base_requirements = {
+<<<<<<< Updated upstream
     "sqlalchemy",
     "flash_attn",
+=======
+>>>>>>> Stashed changes
     "accelerate",
-    "torch",
     "pandas",
-    "transformers",
     "aiohttp",
     "celery",
     "fastapi",
