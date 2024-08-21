@@ -20,7 +20,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 base_requirements = {
     "sqlalchemy",
-    "flash_attn",
+    "psycopg2",
     "accelerate",
     "pandas",
     "aiohttp",
