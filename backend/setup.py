@@ -18,6 +18,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 base_requirements = {
+    "quanto",
     "accelerate",
     "pandas",
     "aiohttp",
@@ -27,8 +28,6 @@ base_requirements = {
     "pydantic-settings",
     "python-dotenv",
     "uvicorn",
-    "websockets",
-    "kombu",
     "SQLAlchemy",
     "psycopg2-binary",
 }
