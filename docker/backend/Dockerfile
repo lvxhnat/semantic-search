@@ -1,5 +1,7 @@
-# Use NVIDIA CUDA base image
-FROM nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
+# Use NVIDIA CUDA image https://gitlab.com/nvidia/container-images/cuda/blob/master/doc/supported-tags.md
+# Check with nvcc --version
+# Check with lsb_release -a
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
