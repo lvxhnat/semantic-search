@@ -26,9 +26,13 @@ docker info | grep -i "runtime"
 ```
 you should see nvidia contained in the runtime line.
 5. Follow the guide in ```notebooks/setup.ipynb``` to Setup the intial vector database and text corpus in the ```data/``` directory. 
-4. In ```docker/```, run 
+6. In ```docker/```, run 
 ```
 docker compose up --build -d
+```
+7. [Optional] Access via SSH, run:
+```bash
+ssh lohyikuang@HOST_IP_ADDRESS -L 3000:localhost:3000 -L 1236:localhost:1236
 ```
 
 ### Structure 
