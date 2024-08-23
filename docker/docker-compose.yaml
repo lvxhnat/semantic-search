@@ -18,16 +18,17 @@ services:
       context: ../
       dockerfile: docker/backend/Dockerfile
     environment:
-      - BACKEND_CHROMADB_PATH=./data/chromadb
-      - BACKEND_DATA_SOURCE=csv
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
       - NVIDIA_VISIBLE_DEVICES=all
+      - BACKEND_DATA_SOURCE=csv
+      - BACKEND_CHROMADB_PATH=./data/chromadb
+      - BACKEND_CHROMADB_COLLECTION_NAME=np2024-dataset
       - BACKEND_DATA_SOURCE_PATH=./data/202407251532-pandas-cleaned.csv
     deploy:
       resources:
         reservations:
           devices:
-          - capabilities: [gpu]
+            - capabilities: [gpu]
     runtime: nvidia
     ports:
       - 1236:1236

@@ -86,10 +86,8 @@ def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: 
                 "If the context does not contain sufficient information to answer the question or no context is provided at all, explicitly state that the context is insufficient and provide your own suggestions with a clear warning. \n"
                 "The context are entries in a database sorted in descending relevance. \n"
                 "In your own understanding, if the description of the issue is vague, ask for clarifications \n"
-                "Context:\n"
-                "{context}\n\n"
                 "Question: {query}\n\n"
-                "Here are the entries in the database that might be relevant to your query:\n"
+                "Here are the contextual entries in the database that might be relevant to your query:\n"
                 "{entries}"
             ).format(context=context, query=query, entries="".join([f'- {entry}\n' for entry in relevant_documents]))
         }
