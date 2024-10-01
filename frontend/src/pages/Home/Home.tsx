@@ -152,6 +152,7 @@ export default function Home() {
           })}
         </List>
       </S.StyledDrawer>
+
       <S.Main open={open}>
         <S.DrawerHeader />
         <S.ChatWrapper>
@@ -205,42 +206,46 @@ export default function Home() {
           ) : null}
           <div ref={chatRef}></div>
         </S.ChatWrapper>
-        <ChatInput
-          loading={loading}
-          handleCancel={() =>
-            cancelTokenSource
-              ? cancelTokenSource.cancel("Operation canceled by user")
-              : null
-          }
-          handleSubmit={(entry) => {
-            const newTextHistory = [...textHistory, entry];
-            const source = axios.CancelToken.source();
-            setCancelTokenSource(source);
-            setError("");
-            setTextHistory(newTextHistory);
-            setLoading(true);
-            request()
-              .post(
-                "query",
-                { query: newTextHistory },
-                { cancelToken: source.token }
-              )
-              .then((res) => {
-                setTextHistory(res.data);
-                setLoading(false);
-              })
-              .catch((err) => {
-                setLoading(false);
-                if (axios.isCancel(err)) {
-                  console.log(err);
-                } else {
-                  setError(
-                    `Exception encountered when running model: ${err.message}`
-                  );
-                }
-              });
-          }}
-        />
+        <div
+          style={{ display: "flex", width: "100%", justifyContent: "center" }}
+        >
+          <ChatInput
+            loading={loading}
+            handleCancel={() =>
+              cancelTokenSource
+                ? cancelTokenSource.cancel("Operation canceled by user")
+                : null
+            }
+            handleSubmit={(entry) => {
+              const newTextHistory = [...textHistory, entry];
+              const source = axios.CancelToken.source();
+              setCancelTokenSource(source);
+              setError("");
+              setTextHistory(newTextHistory);
+              setLoading(true);
+              request()
+                .post(
+                  "query",
+                  { query: newTextHistory },
+                  { cancelToken: source.token }
+                )
+                .then((res) => {
+                  setTextHistory(res.data);
+                  setLoading(false);
+                })
+                .catch((err) => {
+                  setLoading(false);
+                  if (axios.isCancel(err)) {
+                    console.log(err);
+                  } else {
+                    setError(
+                      `Exception encountered when running model: ${err.message}`
+                    );
+                  }
+                });
+            }}
+          />
+        </div>
         <S.FooterTypography variant="subtitle2">
           DbGPT can sometime make mistakes. Check important info.
         </S.FooterTypography>

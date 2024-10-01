@@ -8,12 +8,6 @@ export const Container = styled("div")(({ theme }) => ({
   height: "100%",
 }));
 
-export const FooterTypography = styled(Typography)(({ theme }) => ({
-  paddingTop: 2,
-  paddingBottom: 2,
-  textAlign: "center",
-}));
-
 export const ChatWrapper = styled("div")(({ theme }) => ({
   gap: 20,
   display: "flex",
@@ -23,6 +17,12 @@ export const ChatWrapper = styled("div")(({ theme }) => ({
   "::-webkit-scrollbar": {
     display: "none",
   },
+}));
+
+export const FooterTypography = styled(Typography)(({ theme }) => ({
+  paddingTop: 5,
+  paddingBottom: 5,
+  textAlign: "center",
 }));
 
 export const Main = styled("main", {
