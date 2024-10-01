@@ -8,6 +8,9 @@ export const LogoWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   gap: 5,
   alignItems: "center",
+  "&:hover": {
+    cursor: "pointer"
+  }
 }));
 
 interface AppBarProps extends MuiAppBarProps {
