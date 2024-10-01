@@ -8,11 +8,12 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import DeleteIcon from '@mui/icons-material/Delete';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ChatInput from "../../components/ChatInput/ChatInput";
 import ChatBox from "../../components/ChatBox";
 import { ChatBoxType } from "../../components/ChatBox/ChatBox";
@@ -83,10 +84,6 @@ export default function Home() {
     }
   }, [textHistory]);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   const handleOpenNewChat = () => {
     setError("");
     setLoading(false);
@@ -112,7 +109,7 @@ export default function Home() {
             </IconButton>
           </S.LeftDrawerHeader>
           <S.RightDrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={() => setOpen(false)}>
               {theme.direction === "ltr" ? (
                 <ChevronLeftIcon />
               ) : (
@@ -134,19 +131,21 @@ export default function Home() {
               <ListItem
                 key={entry.uuid}
                 disablePadding
-                onClick={() => {
+              >
+                <ListItemButton onClick={() => {
                   const data = JSON.parse(
                     localStorage.getItem(SEMANTIC_SEARCH_KEY)!
                   );
                   setSelectedUuid(entry.uuid);
                   setTextHistory(data[entry.uuid].chatHistory);
-                }}
-              >
-                <ListItemButton>
+                }}>
                   <Typography variant="subtitle2" noWrap>
                     {entry.text}
                   </Typography>
                 </ListItemButton>
+                <S.DeleteIconButton disableRipple>
+                  <DeleteIcon color="inherit" fontSize="small"/>
+                </S.DeleteIconButton>
               </ListItem>
             );
           })}

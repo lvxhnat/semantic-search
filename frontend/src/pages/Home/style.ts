@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
-import { Drawer, Typography } from "@mui/material";
+import { Button, Drawer, Typography } from "@mui/material";
+import { ColorsEnum } from "../../common/theme";
 
 export const drawerWidth = 300;
 
@@ -78,4 +79,16 @@ export const RightDrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   width: "50%",
   justifyContent: "flex-end",
+}));
+
+export const DeleteIconButton = styled(Button)(({ theme }) => ({
+  padding: 0,
+  "&:hover": {
+    backgroundColor: "transparent",
+    color: ColorsEnum.darkGrey
+  },
+  color: ColorsEnum.grey,
+  background: "transparent",
+  minHeight: 0,
+  minWidth: 40,
 }));
