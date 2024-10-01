@@ -8,7 +8,7 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -128,23 +128,22 @@ export default function Home() {
           </ListItem>
           {availableChats.map((entry) => {
             return (
-              <ListItem
-                key={entry.uuid}
-                disablePadding
-              >
-                <ListItemButton onClick={() => {
-                  const data = JSON.parse(
-                    localStorage.getItem(SEMANTIC_SEARCH_KEY)!
-                  );
-                  setSelectedUuid(entry.uuid);
-                  setTextHistory(data[entry.uuid].chatHistory);
-                }}>
+              <ListItem key={entry.uuid} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    const data = JSON.parse(
+                      localStorage.getItem(SEMANTIC_SEARCH_KEY)!
+                    );
+                    setSelectedUuid(entry.uuid);
+                    setTextHistory(data[entry.uuid].chatHistory);
+                  }}
+                >
                   <Typography variant="subtitle2" noWrap>
                     {entry.text}
                   </Typography>
                 </ListItemButton>
                 <S.DeleteIconButton disableRipple>
-                  <DeleteIcon color="inherit" fontSize="small"/>
+                  <DeleteIcon color="inherit" fontSize="small" />
                 </S.DeleteIconButton>
               </ListItem>
             );

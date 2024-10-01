@@ -85,7 +85,7 @@ export const DeleteIconButton = styled(Button)(({ theme }) => ({
   padding: 0,
   "&:hover": {
     backgroundColor: "transparent",
-    color: ColorsEnum.darkGrey
+    color: ColorsEnum.darkGrey,
   },
   color: ColorsEnum.grey,
   background: "transparent",
