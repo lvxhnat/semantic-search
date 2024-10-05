@@ -57,7 +57,7 @@ export const ChatInputBox = styled("div")<ChatInputBoxProps>(
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    maxWidth: "1000px",
+    maxWidth: "1200px",
     minHeight: "100px",
     color: ColorsEnum.black,
     backgroundColor: isDragActive ? ColorsEnum.coolgray6 : ColorsEnum.lightGrey,

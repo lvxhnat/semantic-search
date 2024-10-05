@@ -70,6 +70,7 @@ export default function ChatInput(props: ChatInputProps) {
             variant="standard"
             autoComplete="off"
             type="text"
+            placeholder="Ask me a question to begin"
             InputProps={{
               disableUnderline: true,
             }}

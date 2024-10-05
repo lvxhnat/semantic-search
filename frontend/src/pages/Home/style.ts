@@ -1,6 +1,10 @@
 import { styled } from "@mui/material/styles";
-import { Button, Drawer, Typography } from "@mui/material";
+import { Button, Drawer, IconButton, Typography } from "@mui/material";
 import { ColorsEnum } from "../../common/theme";
+
+interface DefaultProps {
+  isEmpty?: boolean;
+}
 
 export const drawerWidth = 300;
 
@@ -9,34 +13,49 @@ export const Container = styled("div")(({ theme }) => ({
   height: "100%",
 }));
 
-export const ChatWrapper = styled("div")(({ theme }) => ({
-  gap: 20,
-  display: "flex",
-  flexDirection: "column",
-  height: "100%",
-  overflowY: "auto",
-  "::-webkit-scrollbar": {
-    display: "none",
-  },
-}));
+interface ChatInputWrapperProps extends DefaultProps {}
 
-export const FooterTypography = styled(Typography)(({ theme }) => ({
-  paddingTop: 5,
-  paddingBottom: 5,
-  textAlign: "center",
-}));
+export const ChatInputWrapper = styled("div")<ChatInputWrapperProps>(
+  ({ theme, isEmpty }) => ({
+    marginBottom: isEmpty ? theme.spacing(15) : theme.spacing(2),
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: theme.spacing(2),
+  }),
+);
 
-export const Main = styled("main", {
-  shouldForwardProp: (prop) => prop !== "open",
-})<{
+interface ChatWrapperProps extends DefaultProps {}
+
+export const ChatWrapper = styled("div")<ChatWrapperProps>(
+  ({ theme, isEmpty }) => ({
+    gap: 20,
+    display: isEmpty ? "none" : "flex",
+    flexDirection: "column",
+    height: "100%",
+    maxWidth: "1200px",
+    overflowY: "auto",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  }),
+);
+
+interface MainProps extends DefaultProps {
   open?: boolean;
-}>(({ theme, open }) => ({
+}
+
+export const Main = styled("main")<MainProps>(({ theme, open, isEmpty }) => ({
   flexGrow: 1,
   height: "100%",
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
   overflowY: "hidden",
-  padding: `${theme.spacing(1)} ${theme.spacing(10)}`,
+  padding: `${theme.spacing(1)} ${isEmpty ? theme.spacing(30) : theme.spacing(10)}`,
   paddingBottom: 0,
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,
@@ -69,10 +88,41 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+export const LogoWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: 5,
+  alignItems: "center",
+  "&:hover": {
+    cursor: "pointer",
+  },
+}));
+
 export const LeftDrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
-  width: "50%",
+  width: "100%",
   justifyContent: "flex-start",
+  padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+  paddingTop: 0,
+}));
+
+export const StyledButton = styled(Button)(({ theme }) => ({
+  color: ColorsEnum.darkGrey,
+  textTransform: "none",
+  outline: `1px solid ${ColorsEnum.darkGrey}`,
+  border: "none",
+  borderRadius: "20px",
+  "&:hover": {
+    color: ColorsEnum.black,
+    border: "none",
+    outline: `2px solid ${ColorsEnum.coolgray3}`,
+  },
+}));
+
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: "transparent",
+  "&:hover": {
+    backgroundColor: "transparent",
+  },
 }));
 
 export const RightDrawerHeader = styled("div")(({ theme }) => ({

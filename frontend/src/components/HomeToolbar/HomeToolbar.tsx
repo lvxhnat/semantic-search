@@ -1,10 +1,7 @@
 import * as React from "react";
 import * as S from "./style";
-import Logo from "../../assets/logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Toolbar, Typography } from "@mui/material";
-import { ROUTES } from "../../common/constants";
-import { useNavigate } from "react-router-dom";
 
 interface HomeToolbarProps {
   open: boolean;
@@ -12,7 +9,6 @@ interface HomeToolbarProps {
 }
 
 export const HomeToolbar = (props: HomeToolbarProps) => {
-  const navigate = useNavigate();
   const handleDrawerOpen = () => props.setOpen(true);
   const [gpuUsage, setGpuUsage] = React.useState("Loading...");
 
@@ -47,16 +43,10 @@ export const HomeToolbar = (props: HomeToolbarProps) => {
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
-          sx={{ mr: 2, ...(props.open && { display: "none" }) }}
+          sx={{ mr: 2, ...(props.open && { display: "none" }), "&:hover": { backgroundColor: "transparent"} }}
         >
           <MenuIcon />
         </IconButton>
-        <S.LogoWrapper onClick={() => navigate(ROUTES.HOME)}>
-          <img src={Logo} alt="" width="50px" />
-          <Typography variant="h6" noWrap component="div">
-            DbGPT
-          </Typography>
-        </S.LogoWrapper>
         <div
           style={{
             width: "100%",

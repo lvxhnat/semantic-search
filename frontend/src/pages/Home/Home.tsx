@@ -7,11 +7,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import FirstPageIcon from '@mui/icons-material/FirstPage';
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ChatInput from "../../components/ChatInput/ChatInput";
@@ -22,6 +20,9 @@ import { Alert, Skeleton } from "@mui/material";
 import { SEMANTIC_SEARCH_KEY } from "../../common/constants";
 import ChatTable from "../../components/ChatTable";
 import HomeToolbar from "../../components/HomeToolbar";
+import Logo from "../../assets/logo.png";
+import { ROUTES } from "../../common/constants";
+import { useNavigate } from "react-router-dom";
 
 const defaultValue: ChatBoxType = {
   role: "system",
@@ -31,7 +32,7 @@ const defaultValue: ChatBoxType = {
 };
 
 export default function Home() {
-  const theme = useTheme();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const chatRef = React.useRef<HTMLDivElement>(null);
   const [error, setError] = React.useState<string>("");
@@ -103,21 +104,23 @@ export default function Home() {
       <HomeToolbar open={open} setOpen={setOpen} />
       <S.StyledDrawer variant="persistent" anchor="left" open={open}>
         <S.DrawerHeader>
-          <S.LeftDrawerHeader>
-            <IconButton onClick={handleOpenNewChat}>
-              <OpenInNewIcon />
-            </IconButton>
-          </S.LeftDrawerHeader>
+          <S.LogoWrapper onClick={() => navigate(ROUTES.HOME)}>
+            <img src={Logo} alt="" width="50px" />
+            <Typography variant="h6" noWrap component="div">
+              DbGPT
+            </Typography>
+          </S.LogoWrapper>
           <S.RightDrawerHeader>
-            <IconButton onClick={() => setOpen(false)}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
+            <S.StyledIconButton onClick={() => setOpen(false)}>
+              <FirstPageIcon />
+            </S.StyledIconButton>
           </S.RightDrawerHeader>
         </S.DrawerHeader>
+        <S.LeftDrawerHeader>
+            <S.StyledButton variant="outlined" fullWidth onClick={handleOpenNewChat} endIcon={<OpenInNewIcon />}>
+              New Thread
+            </S.StyledButton>
+          </S.LeftDrawerHeader>
         <Divider />
         <List>
           <ListItem>
@@ -151,9 +154,9 @@ export default function Home() {
         </List>
       </S.StyledDrawer>
 
-      <S.Main open={open}>
-        <S.DrawerHeader />
-        <S.ChatWrapper>
+      <S.Main open={open} isEmpty={textHistory.length < 2}>
+        <S.DrawerHeader/>
+        <S.ChatWrapper isEmpty={textHistory.length < 2} id="chat-wrapper">
           {textHistory
             .slice(1, textHistory.length)
             .map((entry: ChatBoxType, i) => {
@@ -204,9 +207,10 @@ export default function Home() {
           ) : null}
           <div ref={chatRef}></div>
         </S.ChatWrapper>
-        <div
-          style={{ display: "flex", width: "100%", justifyContent: "center" }}
-        >
+        <S.ChatInputWrapper isEmpty={textHistory.length < 2}>
+          {textHistory.length < 2 ? <Typography variant="h4" align="center">
+            Your Gateway to Understanding
+          </Typography> : null}
           <ChatInput
             loading={loading}
             handleCancel={() =>
@@ -243,10 +247,7 @@ export default function Home() {
                 });
             }}
           />
-        </div>
-        <S.FooterTypography variant="subtitle2">
-          DbGPT can sometime make mistakes. Check important info.
-        </S.FooterTypography>
+        </S.ChatInputWrapper>
       </S.Main>
     </S.Container>
   );

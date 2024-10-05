@@ -11,7 +11,13 @@ def get_gpu_usage():
                             stdout=subprocess.PIPE, 
                             stderr=subprocess.PIPE, 
                             text=True)
-    return result.stdout.strip()
+    result = result.stdout.strip()
+    results = result.split(",")
+    return {
+        "id": "1",
+        "usage": results[0],
+        "capacity": results[1]
+    }
 
 # WebSocket connection handler
 @router.websocket("/ws/gpu-usage")
@@ -20,7 +26,7 @@ async def gpu_usage_websocket(websocket: WebSocket):
     try:
         while True:
             gpu_usage = get_gpu_usage()  # Get GPU usage
-            await websocket.send_text(gpu_usage)  # Send it over WebSocket
+            await websocket.send_json(gpu_usage)  # Send it over WebSocket
             await asyncio.sleep(2)  # Adjust the interval as needed
     except WebSocketDisconnect:
         print("WebSocket connection closed.")
