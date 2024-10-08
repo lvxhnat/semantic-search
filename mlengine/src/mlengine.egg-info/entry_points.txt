@@ -1,0 +1,2 @@
+[console_scripts]
+mlengine = mlengine.entrypoints:main

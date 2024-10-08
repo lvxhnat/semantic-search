@@ -8,6 +8,7 @@ class QueryItem_(BaseModel):
 
 class QueryParams(BaseModel):
     query: List[QueryItem_]
+    conversationId: str
 
 class DBEntryParams(BaseModel):
     uuids: List[str]

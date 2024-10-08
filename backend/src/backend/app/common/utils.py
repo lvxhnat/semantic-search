@@ -65,17 +65,16 @@ def rerank_documents(query, relevant_documents: List[str]) -> List[str]:
     _, l = zip(*sorted_pairs)
     return l
 
-def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: int = 2, distance_threshold = 0.1) -> str:
+def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: int = 2, distance_threshold = 0.1, context: str = None):
 
     """
     min_ref_docs : minimum number of documents we want the RAG model to reference.
     """
-    
-    distance_ids, relevant_documents = query_chroma_collection(df, query, chroma_collection, min_ref_docs, distance_threshold)
-    relevant_documents = rerank_documents(query, relevant_documents)
-
-    # Join results with new lines for the context
-    context = "\n".join(relevant_documents) 
+    distance_ids = {}
+    if not context:
+        distance_ids, relevant_documents = query_chroma_collection(df, query, chroma_collection, min_ref_docs, distance_threshold)
+        relevant_documents = rerank_documents(query, relevant_documents)
+        context = "\n".join(relevant_documents)
 
     return [
         {"role": "system", "content": "You are a helpful AI assistant that answers questions from a database of GitHub issues."},
@@ -87,9 +86,8 @@ def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: 
                 "The context are entries in a database sorted in descending relevance. \n"
                 "In your own understanding, if the description of the issue is vague, ask for clarifications \n"
                 "Question: {query}\n\n"
-                "Here are the contextual entries in the database that might be relevant to your query:\n"
-                "{entries}"
-            ).format(context=context, query=query, entries="".join([f'- {entry}\n' for entry in relevant_documents]))
+                "Here are the entries that might be relevant to this question:\n"
+                "{context}"
+            )
         }
     ], distance_ids
-
