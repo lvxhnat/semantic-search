@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Button, Drawer, IconButton, Typography } from "@mui/material";
+import { Button, Drawer, Grid, IconButton, Typography } from "@mui/material";
 import { ColorsEnum } from "../../common/theme";
 
 interface DefaultProps {
@@ -42,12 +42,11 @@ export const ChatWrapper = styled("div")<ChatWrapperProps>(
     },
   }),
 );
-
 interface MainProps extends DefaultProps {
   open?: boolean;
 }
 
-export const Main = styled("main")<MainProps>(({ theme, open, isEmpty }) => ({
+export const Main = styled(Grid)<MainProps>(({ theme, open, isEmpty }) => ({
   flexGrow: 1,
   height: "100%",
   display: "flex",

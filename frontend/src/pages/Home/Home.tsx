@@ -22,6 +22,7 @@ import HomeToolbar from "../../components/HomeToolbar";
 import Logo from "../../assets/logo.png";
 import { ROUTES } from "../../common/constants";
 import { useNavigate } from "react-router-dom";
+import PDFViewer from "../../components/PDFViwer";
 
 const defaultValue: ChatBoxType = {
   role: "system",
@@ -44,6 +45,7 @@ export default function Home() {
   const [cancelTokenSource, setCancelTokenSource] =
     React.useState<CancelTokenSource | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [files, setFiles] = React.useState<File[]>([]);
 
   React.useEffect(() => {
     // Text history more than 1 so we do not save chats that have been initialised but not spoken to.
@@ -159,7 +161,7 @@ export default function Home() {
           })}
         </List>
       </S.StyledDrawer>
-
+      
       <S.Main open={open} isEmpty={textHistory.length < 2}>
         <S.DrawerHeader />
         <S.ChatWrapper isEmpty={textHistory.length < 2} id="chat-wrapper">
@@ -209,6 +211,7 @@ export default function Home() {
           ) : null}
           <div ref={chatRef}></div>
         </S.ChatWrapper>
+
         <S.ChatInputWrapper isEmpty={textHistory.length < 2}>
           {textHistory.length < 2 ? (
             <Typography variant="h4" align="center">
@@ -216,7 +219,9 @@ export default function Home() {
             </Typography>
           ) : null}
           <ChatInput
+            setFiles={setFiles}
             conversationId={conversationId}
+            isNewConversation={textHistory.length < 2}
             loading={loading}
             handleCancel={() =>
               cancelTokenSource

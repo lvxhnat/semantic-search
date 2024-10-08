@@ -4,6 +4,13 @@ import { ColorsEnum } from "../../common/theme";
 
 const dragColor = ColorsEnum.amethyst;
 
+export const FileUploaded = styled("div")(({ theme }) => ({
+  display: "flex",
+  gap: 8,
+  maxWidth: "200px",
+  color: ColorsEnum.amethyst
+}));
+
 export const StyledTextField = styled(TextField)(({ theme }) => ({
   width: "100%",
   "input[type=number]::-webkit-inner-spin-button": {
