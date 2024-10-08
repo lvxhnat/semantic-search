@@ -31,8 +31,12 @@ export default function ChatInput(props: ChatInputProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [files, setFiles] = React.useState<File[]>([]);
   const [value, setValue] = React.useState<string>("");
-
   const maxFiles = 3;
+
+  React.useEffect(() => {
+    setFiles([])
+  }, [props.conversationId])
+  
 
   const handleSubmit = () => {
     if (!(value.trim() === "")) {

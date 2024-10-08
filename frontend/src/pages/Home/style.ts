@@ -144,5 +144,5 @@ export const DeleteIconButton = styled(Button)(({ theme }) => ({
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   display: "inline-block",
   whiteSpace: "pre-line",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
 }));

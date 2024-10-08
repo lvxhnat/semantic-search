@@ -85,21 +85,20 @@ export default function Home() {
       });
       setAvailableChats(chatView);
     }
+
+    if (chatRef.current) {
+      chatRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [textHistory]);
 
   const handleOpenNewChat = () => {
     setError("");
     setLoading(false);
     setSelectedUuid(uuid());
+    setFiles([])
     setTextHistory([defaultValue]);
     setConversationId(uuid()); // Create a new conversation id
   };
-
-  React.useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [textHistory]);
 
   return (
     <S.Container>
@@ -238,7 +237,7 @@ export default function Home() {
               request()
                 .post(
                   "query",
-                  { query: newTextHistory },
+                  { query: newTextHistory, conversationId: conversationId },
                   { cancelToken: source.token },
                 )
                 .then((res) => {
