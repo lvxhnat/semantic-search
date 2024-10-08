@@ -1,7 +1,12 @@
 import * as React from "react";
 import * as S from "./style";
 import SendIcon from "@mui/icons-material/Send";
-import { InputAdornment, Tooltip, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  InputAdornment,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { typographyTheme } from "../../common/theme/typography";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import PDFUploader from "../PDFUploader";
@@ -11,14 +16,18 @@ import { ColorsEnum } from "../../common/theme";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { removeLineBreaks } from "../../common/utils/formatting";
+import { request } from "../../common/services/request";
+import { ENDPOINTS } from "../../common/constants";
 
 interface ChatInputProps {
+  conversationId: string;
   handleSubmit: (val: any) => void;
   handleCancel: () => void;
   loading?: boolean;
 }
 
 export default function ChatInput(props: ChatInputProps) {
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [files, setFiles] = React.useState<File[]>([]);
   const [value, setValue] = React.useState<string>("");
 
@@ -32,18 +41,25 @@ export default function ChatInput(props: ChatInputProps) {
       };
       props.handleSubmit(entry);
       setValue("");
-      console.log(value)
     }
   };
 
-  const onDrop = React.useCallback((acceptedFiles: File[]) => {
-    if (files.length < maxFiles) {
-      const newFiles = [...files, ...acceptedFiles].slice(0, maxFiles);
-      setFiles(newFiles);
-    }
-  }, []);
+  const handleFileUpload = () => (acceptedFiles: File[]) => {
+    setLoading(true);
+    let newFiles = [...files, ...acceptedFiles].slice(0, maxFiles);
+    setFiles(newFiles);
+    const formData = new FormData();
+    newFiles.forEach((file: File) => formData.append("files", file));
+    formData.append("conversation_id", props.conversationId); // Add conversation id
+    request()
+      .post(ENDPOINTS.UPLOAD_FILE, formData)
+      .then((res) => setLoading(false))
+      .catch((err) => console.error(err));
+  };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const onDrop = React.useCallback(handleFileUpload, []);
+
+  const { getRootProps, isDragActive } = useDropzone({
     onDrop,
     multiple: true,
     accept: {
@@ -81,15 +97,17 @@ export default function ChatInput(props: ChatInputProps) {
             }}
             InputLabelProps={{
               style: { fontSize: typographyTheme.body1.fontSize },
-            }} // font size of input label
+            }}
             value={removeLineBreaks(value) ?? ""}
             onChange={(event) => setValue(event.target.value ?? "")}
-            onKeyDown={(e) => (e.keyCode === 13) ? handleSubmit() : null}
+            onKeyDown={(e) => (e.keyCode === 13 ? handleSubmit() : null)}
           />
           <S.FunctionalityWrapper>
             <S.MetaFunctionalityWrapper>
-              {files.length === 0 ? (
-                <PDFUploader setFiles={setFiles} />
+              {loading ? (
+                <CircularProgress size="20px" color="inherit" />
+              ) : files.length === 0 ? (
+                <PDFUploader handleFileUpload={handleFileUpload} />
               ) : (
                 <Tooltip
                   title={`${files.length} files uploaded. You can upload ${
@@ -97,7 +115,7 @@ export default function ChatInput(props: ChatInputProps) {
                   } more files.`}
                   style={{ color: ColorsEnum.amethyst, display: "flex" }}
                 >
-                  <InsertDriveFileIcon fontSize="small" color="inherit" />
+                  <InsertDriveFileIcon fontSize="inherit" color="inherit" />
                 </Tooltip>
               )}
               <MetaFocus />
@@ -107,9 +125,7 @@ export default function ChatInput(props: ChatInputProps) {
               disableFocusRipple
               onClick={props.loading ? props.handleCancel : props.handleSubmit}
             >
-              <InputAdornment position="start">
-                {props.loading ? <StopCircleIcon /> : <SendIcon />}
-              </InputAdornment>
+              {props.loading ? <StopCircleIcon /> : <SendIcon />}
             </S.StyledIconButton>
           </S.FunctionalityWrapper>
         </React.Fragment>

@@ -12,7 +12,7 @@ export const getCookie = (name: string) => {
 export const setCookie = (
   name: string,
   value: any,
-  options?: CookieSetOptions
+  options?: CookieSetOptions,
 ) => {
   const cookies = new UniversalCookies();
   cookies.set(name, value, { ...defaultOptions, ...options });

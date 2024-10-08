@@ -26,8 +26,10 @@ export const StyledIconButton = styled(IconButton)(({ theme }) => ({
 export const FunctionalityWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   width: "100%",
+  height: "100%",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "flex-end",
+  paddingBottom: "5px",
 }));
 
 export const MetaFunctionalityWrapper = styled("div")(({ theme }) => ({
@@ -35,6 +37,8 @@ export const MetaFunctionalityWrapper = styled("div")(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: `0px ${theme.spacing(2)}`,
+  fontSize: "20px",
+  gap: 10,
 }));
 
 export const DropBox = styled("div")(({ theme }) => ({
@@ -62,5 +66,5 @@ export const ChatInputBox = styled("div")<ChatInputBoxProps>(
     color: ColorsEnum.black,
     backgroundColor: isDragActive ? ColorsEnum.coolgray6 : ColorsEnum.lightGrey,
     outline: isDragActive ? `2px dashed ${dragColor}` : "none",
-  })
+  }),
 );

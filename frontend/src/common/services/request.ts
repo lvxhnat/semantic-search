@@ -6,8 +6,6 @@ const request = () => {
     timeout: 60000,
     headers: {
       Authorization: "null",
-      "Content-Type": "application/json",
-      accept: "application/json",
     },
   });
   axiosInstance.interceptors.response.use((response: any) => {

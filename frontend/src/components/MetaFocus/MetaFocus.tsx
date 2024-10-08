@@ -1,37 +1,50 @@
 import React from "react";
 import * as S from "./style";
-import { Button, Typography } from "@mui/material";
+import { MenuItem, Typography } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 export default function MetaFocus() {
-  const [file, setFile] = React.useState<File | null>(null);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const f = event.target.files?.[0];
-
-    if (f) {
-      const isPDF =
-        f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf");
-      if (isPDF) setFile(f);
-      else setFile(null);
-    }
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const handleOpenFileDialog = (event: React.MouseEvent) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation(); // Prevent event bubbling
+    setAnchorEl(event.currentTarget);
     if (fileInputRef.current) {
       fileInputRef.current.click(); // Open the file dialog
     }
   };
 
   return (
-    <S.AttachFileButton
-      startIcon={<FilterListIcon fontSize="small" />}
-      onClick={handleOpenFileDialog}
-      disableRipple
-    >
-      <Typography variant="subtitle2">Focus</Typography>
-    </S.AttachFileButton>
+    <React.Fragment>
+      <S.StyledButton
+        startIcon={<FilterListIcon fontSize="small" />}
+        onClick={handleClick}
+        disableRipple
+      >
+        <Typography variant="subtitle2">Focus</Typography>
+      </S.StyledButton>
+      <S.StyledMenu
+        id="demo-customized-menu"
+        MenuListProps={{
+          "aria-labelledby": "demo-customized-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose} disableRipple>
+          Edit
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          Duplicate
+        </MenuItem>
+      </S.StyledMenu>
+    </React.Fragment>
   );
 }

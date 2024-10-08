@@ -4,7 +4,6 @@ import { ColorsEnum } from "../../common/theme";
 
 export const drawerWidth = 300;
 
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }

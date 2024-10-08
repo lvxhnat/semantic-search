@@ -2,14 +2,13 @@ import * as React from "react";
 import * as S from "./style";
 import axios, { CancelTokenSource } from "axios";
 import { v4 as uuid } from "uuid";
-import { useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import DeleteIcon from "@mui/icons-material/Delete";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import FirstPageIcon from '@mui/icons-material/FirstPage';
+import FirstPageIcon from "@mui/icons-material/FirstPage";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ChatInput from "../../components/ChatInput/ChatInput";
@@ -37,6 +36,7 @@ export default function Home() {
   const chatRef = React.useRef<HTMLDivElement>(null);
   const [error, setError] = React.useState<string>("");
   const [availableChats, setAvailableChats] = React.useState<any[]>([]);
+  const [conversationId, setConversationId] = React.useState<string>(uuid());
   const [selectedUuid, setSelectedUuid] = React.useState<string>(uuid());
   const [textHistory, setTextHistory] = React.useState<ChatBoxType[]>([
     defaultValue,
@@ -57,7 +57,7 @@ export default function Home() {
               chatHistory: textHistory,
               lastUpdated: new Date(),
             },
-          })
+          }),
         );
       } else {
         const json = JSON.parse(obj!);
@@ -90,6 +90,7 @@ export default function Home() {
     setLoading(false);
     setSelectedUuid(uuid());
     setTextHistory([defaultValue]);
+    setConversationId(uuid()); // Create a new conversation id
   };
 
   React.useEffect(() => {
@@ -117,10 +118,15 @@ export default function Home() {
           </S.RightDrawerHeader>
         </S.DrawerHeader>
         <S.LeftDrawerHeader>
-            <S.StyledButton variant="outlined" fullWidth onClick={handleOpenNewChat} endIcon={<OpenInNewIcon />}>
-              New Thread
-            </S.StyledButton>
-          </S.LeftDrawerHeader>
+          <S.StyledButton
+            variant="outlined"
+            fullWidth
+            onClick={handleOpenNewChat}
+            endIcon={<OpenInNewIcon />}
+          >
+            New Thread
+          </S.StyledButton>
+        </S.LeftDrawerHeader>
         <Divider />
         <List>
           <ListItem>
@@ -135,7 +141,7 @@ export default function Home() {
                 <ListItemButton
                   onClick={() => {
                     const data = JSON.parse(
-                      localStorage.getItem(SEMANTIC_SEARCH_KEY)!
+                      localStorage.getItem(SEMANTIC_SEARCH_KEY)!,
                     );
                     setSelectedUuid(entry.uuid);
                     setTextHistory(data[entry.uuid].chatHistory);
@@ -155,7 +161,7 @@ export default function Home() {
       </S.StyledDrawer>
 
       <S.Main open={open} isEmpty={textHistory.length < 2}>
-        <S.DrawerHeader/>
+        <S.DrawerHeader />
         <S.ChatWrapper isEmpty={textHistory.length < 2} id="chat-wrapper">
           {textHistory
             .slice(1, textHistory.length)
@@ -170,17 +176,13 @@ export default function Home() {
                     user={entry.role}
                     ref={chatRef}
                   >
-                    <Typography style={{ whiteSpace: "pre-line" }}>
-                      {text}
-                    </Typography>
+                    <S.StyledTypography>{text}</S.StyledTypography>
                   </ChatBox>
                 );
               } else
                 return (
                   <ChatBox key={`${entry.role}-${i}`} user={entry.role}>
-                    <Typography align="left" style={{ whiteSpace: "pre-line" }}>
-                      {text}
-                    </Typography>
+                    <S.StyledTypography>{text}</S.StyledTypography>
                     {entry.reference_ids &&
                     Object.keys(entry.reference_ids).length > 0 ? (
                       <div style={{ width: "100%" }}>
@@ -208,10 +210,13 @@ export default function Home() {
           <div ref={chatRef}></div>
         </S.ChatWrapper>
         <S.ChatInputWrapper isEmpty={textHistory.length < 2}>
-          {textHistory.length < 2 ? <Typography variant="h4" align="center">
-            Your Gateway to Understanding
-          </Typography> : null}
+          {textHistory.length < 2 ? (
+            <Typography variant="h4" align="center">
+              Your Gateway to Understanding
+            </Typography>
+          ) : null}
           <ChatInput
+            conversationId={conversationId}
             loading={loading}
             handleCancel={() =>
               cancelTokenSource
@@ -229,7 +234,7 @@ export default function Home() {
                 .post(
                   "query",
                   { query: newTextHistory },
-                  { cancelToken: source.token }
+                  { cancelToken: source.token },
                 )
                 .then((res) => {
                   setTextHistory(res.data);
@@ -241,7 +246,7 @@ export default function Home() {
                     console.log(err);
                   } else {
                     setError(
-                      `Exception encountered when running model: ${err.message}`
+                      `Exception encountered when running model: ${err.message}`,
                     );
                   }
                 });
