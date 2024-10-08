@@ -53,7 +53,6 @@ export const Main = styled("main")<MainProps>(({ theme, open, isEmpty }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
   overflowY: "hidden",
   padding: `${theme.spacing(1)} ${isEmpty ? theme.spacing(30) : theme.spacing(10)}`,
   paddingBottom: 0,

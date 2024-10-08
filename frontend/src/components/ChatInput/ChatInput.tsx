@@ -10,6 +10,7 @@ import { useDropzone } from "react-dropzone";
 import { ColorsEnum } from "../../common/theme";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { removeLineBreaks } from "../../common/utils/formatting";
 
 interface ChatInputProps {
   handleSubmit: (val: any) => void;
@@ -31,6 +32,7 @@ export default function ChatInput(props: ChatInputProps) {
       };
       props.handleSubmit(entry);
       setValue("");
+      console.log(value)
     }
   };
 
@@ -80,13 +82,9 @@ export default function ChatInput(props: ChatInputProps) {
             InputLabelProps={{
               style: { fontSize: typographyTheme.body1.fontSize },
             }} // font size of input label
-            value={value ?? ""}
-            onChange={(event) => {
-              setValue(event.target.value ?? "");
-            }}
-            onKeyDown={(e) => {
-              if (e.keyCode === 13) handleSubmit();
-            }}
+            value={removeLineBreaks(value) ?? ""}
+            onChange={(event) => setValue(event.target.value ?? "")}
+            onKeyDown={(e) => (e.keyCode === 13) ? handleSubmit() : null}
           />
           <S.FunctionalityWrapper>
             <S.MetaFunctionalityWrapper>

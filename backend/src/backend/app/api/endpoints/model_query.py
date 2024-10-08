@@ -29,9 +29,7 @@ def search_term(params: QueryParams):
     query.append({"role": "system", "content": output_text, "reference_ids": reference_ids})
     return query
 
-
 @router.post("/db-entries")
 def search_uuids(params: DBEntryParams):
     relevant_columns = ["node_id", "title", "state", "url", "body", "created_at"]
     return df[df["node_id"].isin(params.uuids)][relevant_columns].to_dict("records")
-    

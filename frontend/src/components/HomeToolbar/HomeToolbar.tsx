@@ -8,17 +8,23 @@ interface HomeToolbarProps {
   setOpen: (open: boolean) => void;
 }
 
+interface GPUData {
+  id: string
+  usage: string
+  capacity: string
+}
+
 export const HomeToolbar = (props: HomeToolbarProps) => {
   const handleDrawerOpen = () => props.setOpen(true);
-  const [gpuUsage, setGpuUsage] = React.useState("Loading...");
-
+  const [gpuUsage, setGpuUsage] = React.useState<GPUData>({} as GPUData);
+  
   React.useEffect(() => {
     const ws = new WebSocket(
       `${process.env.REACT_APP_WEBSOCKET_URL!}/ws/gpu-usage`
     );
 
     ws.onmessage = (event) => {
-      setGpuUsage(event.data); // Update the state with new data from WebSocket
+      setGpuUsage(JSON.parse(event.data)); // Update the state with new data from WebSocket
     };
 
     ws.onerror = (event) => {
@@ -57,7 +63,7 @@ export const HomeToolbar = (props: HomeToolbarProps) => {
         >
           <Typography variant="subtitle2">
             <b>GPU Memory Usage:</b> &nbsp;
-            {gpuUsage.replace(", ", "/")}
+            {gpuUsage.usage ? `${(100 * +gpuUsage.usage / +gpuUsage.capacity).toFixed(2)}%`  : null}
           </Typography>
         </div>
       </Toolbar>

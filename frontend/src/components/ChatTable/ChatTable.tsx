@@ -83,6 +83,7 @@ export default function ChatTable(props: ChatTableProps) {
             {entries.map((row) => {
               return (
                 <S.StyledTableRow
+                  key={row.node_id}
                   hover
                   role="checkbox"
                   tabIndex={-1}
