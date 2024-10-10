@@ -13,6 +13,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Additional
+*.pdf
+*.txt
+./src/backend/uploaded_files/*
 # C extensions
 *.so
 

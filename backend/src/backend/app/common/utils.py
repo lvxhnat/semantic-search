@@ -77,17 +77,17 @@ def craft_prompt(query: str, df: pd.DataFrame, chroma_collection, min_ref_docs: 
         context = "\n".join(relevant_documents)
 
     return [
-        {"role": "system", "content": "You are a helpful AI assistant that answers questions from a database of GitHub issues."},
+        {"role": "system", "content": "You are a helpful AI assistant."},
         {
             "role": "user",
             "content": (
-                "Answer the following question using only the provided context. Do not assume or add information beyond what is in the context. \n"
-                "If the context does not contain sufficient information to answer the question or no context is provided at all, explicitly state that the context is insufficient and provide your own suggestions with a clear warning. \n"
-                "The context are entries in a database sorted in descending relevance. \n"
-                "In your own understanding, if the description of the issue is vague, ask for clarifications \n"
-                "Question: {query}\n\n"
-                "Here are the entries that might be relevant to this question:\n"
-                "{context}"
+                "Answer the following question using only the provided context and do not assume or add your own information. \n"
+                "If the context does not contain sufficient information to answer the question or no context is provided at all, provide your own suggestions with a clear warning. \n"
+                "The context are sorted in descending relevance. \n"
+                "If the description of the issue is vague, ask for clarifications \n"
+                f"Question: {query}\n\n"
+                "Here is the relevant relevant:\n"
+                f"{context}"
             )
         }
     ], distance_ids

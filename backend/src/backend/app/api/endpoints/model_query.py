@@ -33,7 +33,7 @@ def search_term(params: QueryParams):
         print(f"Retrieved document of length {len(context)}")
 
     query = [q.model_dump(mode = "json") for q in params.query]
-    
+
     with torch.no_grad():
         prompt, reference_ids = craft_prompt(query[-1]["content"], df, chroma_collection, context = context)
         output = pipe(prompt, **generation_args)
