@@ -10,7 +10,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const StyledTableContainer = styled(Paper)(({ theme }) => ({
-  "&:-webkit-scrollbar": {
+  "&::-webkit-scrollbar": {
     display: "none",
   },
   width: "100%",

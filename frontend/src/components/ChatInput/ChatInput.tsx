@@ -23,18 +23,18 @@ interface ChatInputProps {
   isNewConversation: boolean;
   handleSubmit: (val: any) => void;
   handleCancel: () => void;
-  setFiles: (f: File[]) => void;
+  setFile: (f: File | undefined) => void;
   loading?: boolean;
 }
 
 export default function ChatInput(props: ChatInputProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [files, setFiles] = React.useState<File[]>([]);
+  const [file, setFile] = React.useState<File>();
   const [value, setValue] = React.useState<string>("");
   const maxFiles = 3;
 
   React.useEffect(() => {
-    setFiles([])
+    setFile(undefined)
   }, [props.conversationId])
   
 
@@ -50,12 +50,12 @@ export default function ChatInput(props: ChatInputProps) {
   };
 
   const handleFileUpload = (acceptedFiles: File[]) => {
+    const acceptedFile = acceptedFiles[0]
     setLoading(true);
-    let newFiles = [...files, ...acceptedFiles].slice(0, maxFiles);
-    setFiles(newFiles);
-    props.setFiles(newFiles)
+    setFile(acceptedFile);
+    props.setFile(acceptedFile)
     const formData = new FormData();
-    newFiles.forEach((file: File) => formData.append("files", file));
+    formData.append("files", acceptedFile)
     formData.append("conversation_id", props.conversationId); // Add conversation id
     request()
       .post(ENDPOINTS.UPLOAD_FILE, formData)
@@ -67,7 +67,7 @@ export default function ChatInput(props: ChatInputProps) {
 
   const { getRootProps, isDragActive } = useDropzone({
     onDrop,
-    multiple: true,
+    multiple: false,
     accept: {
       "application/pdf": [],
     },
@@ -75,6 +75,7 @@ export default function ChatInput(props: ChatInputProps) {
 
   return (
     <S.ChatInputBox
+      id="chat-input-box"
       {...getRootProps({
         onClick: (event) => event.stopPropagation(),
         isDragActive: isDragActive,
@@ -90,6 +91,7 @@ export default function ChatInput(props: ChatInputProps) {
       ) : (
         <React.Fragment>
           <S.StyledTextField
+            disabled={loading}
             multiline
             variant="standard"
             autoComplete="off"
@@ -115,19 +117,17 @@ export default function ChatInput(props: ChatInputProps) {
                   <CircularProgress size="20px" color="inherit" />
                   <Typography variant="subtitle2">Uploading...</Typography>
                 </S.FileUploaded>
-              ) : files.length === 0 ? (
+              ) : !file ? (
                 <PDFUploader handleFileUpload={handleFileUpload} />
               ) : (
                 <S.FileUploaded>
                   <Tooltip
-                    title={`${files.length} files uploaded. You can upload ${
-                      maxFiles - files.length
-                    } more files.`}
+                    title={"File files uploaded."}
                     style={{ color: ColorsEnum.amethyst, display: "flex" }}
                   >
                     <InsertDriveFileIcon fontSize="inherit" color="inherit" />
                   </Tooltip>
-                  <Typography variant="subtitle2" color="inherit" noWrap>{files[0].name}</Typography>
+                  <Typography variant="subtitle2" color="inherit" noWrap>{file.name}</Typography>
                 </S.FileUploaded>
               )}
               <MetaFocus isNewConversation={props.isNewConversation}/>

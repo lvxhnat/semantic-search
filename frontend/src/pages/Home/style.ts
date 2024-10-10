@@ -50,8 +50,6 @@ export const Main = styled(Grid)<MainProps>(({ theme, open, isEmpty }) => ({
   flexGrow: 1,
   height: "100%",
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
   overflowY: "hidden",
   padding: `${theme.spacing(1)} ${isEmpty ? theme.spacing(30) : theme.spacing(10)}`,
   paddingBottom: 0,
@@ -67,6 +65,15 @@ export const Main = styled(Grid)<MainProps>(({ theme, open, isEmpty }) => ({
     }),
     marginLeft: 0,
   }),
+}));
+
+export const GridItemWrapper = styled(Grid)(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  overflowY: "hidden",
+  flexDirection: "column",
+  justifyContent: "center",
+  padding: theme.spacing(1)
 }));
 
 export const StyledDrawer = styled(Drawer)(({ theme }) => ({
