@@ -1,11 +1,7 @@
 import * as React from "react";
 import * as S from "./style";
 import SendIcon from "@mui/icons-material/Send";
-import {
-  CircularProgress,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { CircularProgress, Tooltip, Typography } from "@mui/material";
 import { typographyTheme } from "../../common/theme/typography";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import PDFUploader from "../PDFUploader";
@@ -34,9 +30,8 @@ export default function ChatInput(props: ChatInputProps) {
   const maxFiles = 3;
 
   React.useEffect(() => {
-    setFile(undefined)
-  }, [props.conversationId])
-  
+    setFile(undefined);
+  }, [props.conversationId]);
 
   const handleSubmit = () => {
     if (!(value.trim() === "")) {
@@ -50,12 +45,12 @@ export default function ChatInput(props: ChatInputProps) {
   };
 
   const handleFileUpload = (acceptedFiles: File[]) => {
-    const acceptedFile = acceptedFiles[0]
+    const acceptedFile = acceptedFiles[0];
     setLoading(true);
     setFile(acceptedFile);
-    props.setFile(acceptedFile)
+    props.setFile(acceptedFile);
     const formData = new FormData();
-    formData.append("files", acceptedFile)
+    formData.append("files", acceptedFile);
     formData.append("conversation_id", props.conversationId); // Add conversation id
     request()
       .post(ENDPOINTS.UPLOAD_FILE, formData)
@@ -127,10 +122,12 @@ export default function ChatInput(props: ChatInputProps) {
                   >
                     <InsertDriveFileIcon fontSize="inherit" color="inherit" />
                   </Tooltip>
-                  <Typography variant="subtitle2" color="inherit" noWrap>{file.name}</Typography>
+                  <Typography variant="subtitle2" color="inherit" noWrap>
+                    {file.name}
+                  </Typography>
                 </S.FileUploaded>
               )}
-              <MetaFocus isNewConversation={props.isNewConversation}/>
+              <MetaFocus isNewConversation={props.isNewConversation} />
             </S.MetaFunctionalityWrapper>
             <S.StyledIconButton
               disabled={value === "" && !props.loading}

@@ -38,7 +38,7 @@ const MetaFocusChoice = (props: MetaFocusChoiceProps) => {
 
 interface MetaFocusProps {
   onClick?: (choice: string) => void;
-  isNewConversation: boolean
+  isNewConversation: boolean;
 }
 
 type SelectedModelTypes = "general" | "medical-patient" | "medical-expert";

@@ -8,7 +8,7 @@ export const FileUploaded = styled("div")(({ theme }) => ({
   display: "flex",
   gap: 8,
   maxWidth: "200px",
-  color: ColorsEnum.amethyst
+  color: ColorsEnum.amethyst,
 }));
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({

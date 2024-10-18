@@ -95,7 +95,7 @@ export default function Home() {
     const data = JSON.parse(localStorage.getItem(SEMANTIC_SEARCH_KEY)!);
     setSelectedUuid(conversationId);
     setTextHistory(data[conversationId].chatHistory);
-    setFile(undefined)
+    setFile(undefined);
     request()
       .get(`upload/pdf/${conversationId}`, { responseType: "blob" })
       .then((response) => {
@@ -183,7 +183,7 @@ export default function Home() {
             xs={5}
             sx={{
               overflowY: "hidden",
-              width: "100%"
+              width: "100%",
             }}
           >
             <PDFViewer file={file} />

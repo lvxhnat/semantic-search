@@ -3,7 +3,6 @@ import {
   createTheme,
   ThemeProvider as ThemeMUIProvider,
 } from "@mui/material/styles";
-import { FC, useEffect } from "react";
 import { ThemeMode } from "../common/types";
 import { useThemeStore } from "../store/theme";
 
@@ -12,12 +11,15 @@ interface ThemeProviderProps {
   children?: React.ReactNode;
 }
 
-const ThemeProvider: FC<ThemeProviderProps> = ({ children, modeTheme }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  modeTheme,
+}) => {
   const { mode, setMode } = useThemeStore();
   const themeMode = modeTheme || "light";
   const theme = createTheme((mode || themeMode) as any);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setMode(themeMode);
   }, [setMode, themeMode]);
 

@@ -18,14 +18,16 @@ export const StyledMenuItem = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "flex-start",
   padding: 5,
-  gap: 5
+  gap: 5,
 }));
 
 interface StyledMenuItemContainerProps {
-  selected: boolean
+  selected: boolean;
 }
 
-export const StyledMenuItemContainer = styled("div")<StyledMenuItemContainerProps>(({ theme, selected }) => ({
+export const StyledMenuItemContainer = styled(
+  "div",
+)<StyledMenuItemContainerProps>(({ theme, selected }) => ({
   padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
   display: "flex",
   flexDirection: "column",
@@ -33,14 +35,14 @@ export const StyledMenuItemContainer = styled("div")<StyledMenuItemContainerProp
   alignItems: "flex-start",
   width: "250px",
   backgroundColor: selected ? ColorsEnum.offWhite : "transparent",
-  "&:hover": { backgroundColor: ColorsEnum.coolgray5, cursor: "pointer" }
+  "&:hover": { backgroundColor: ColorsEnum.coolgray5, cursor: "pointer" },
 }));
 
 export const StyledMenuItemTitle = styled("div")(({ theme }) => ({
   gap: 5,
   display: "flex",
   justifyContent: "flex-start",
-  alignItems: "center"
+  alignItems: "center",
 }));
 
 export const StyledMenu = styled((props: MenuProps) => (

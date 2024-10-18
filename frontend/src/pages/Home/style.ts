@@ -73,7 +73,7 @@ export const GridItemWrapper = styled(Grid)(({ theme }) => ({
   overflowY: "hidden",
   flexDirection: "column",
   justifyContent: "center",
-  padding: theme.spacing(1)
+  padding: theme.spacing(1),
 }));
 
 export const StyledDrawer = styled(Drawer)(({ theme }) => ({
