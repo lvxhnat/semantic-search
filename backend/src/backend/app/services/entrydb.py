@@ -1,13 +1,15 @@
 import os
 import pandas as pd
+from pathlib import Path
 from sqlalchemy import engine
 from dotenv import load_dotenv
 from backend.app.common.utils import clean_text
 
-load_dotenv()
+env_loaded = load_dotenv()
+root_path: str = Path(__file__).parents[4]
 
-SOURCE = os.getenv("BACKEND_DATA_SOURCE")
-SOURCE_PATH = os.getenv("BACKEND_DATA_SOURCE_PATH")
+SOURCE = "csv"
+SOURCE_PATH='https://drive.google.com/uc?id=' + os.environ["SAMPLE_DATA"].split('/')[-2]
 
 if SOURCE is None or SOURCE_PATH is None: 
     raise ValueError(f"Source or Source Path should not be none. Please specify.")
@@ -18,6 +20,7 @@ if SOURCE == "csv":
         .dropna(subset = ['body'])
         .assign(cleaned_body = lambda d: d["body"].apply(clean_text))
     )
+    print(f"CSV Loaded from path {SOURCE_PATH}")
 elif SOURCE == "postgres":
     engine = engine.create_engine(SOURCE_PATH, echo=False)
     SOURCE_TABLE = os.getenv("BACKEND_DATA_SOURCE_TABLE")
