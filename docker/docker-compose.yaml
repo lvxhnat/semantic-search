@@ -4,7 +4,7 @@ services:
       context: ../
       dockerfile: docker/frontend/Dockerfile
     environment:
-      - REACT_APP_BASE_URL=http://localhost:1236
+      - REACT_APP_BASE_URL=http://backend:1236
     depends_on:
       - backend
     ports:
@@ -20,10 +20,7 @@ services:
     environment:
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
       - NVIDIA_VISIBLE_DEVICES=all
-      - BACKEND_DATA_SOURCE=csv
-      - BACKEND_CHROMADB_PATH=./data/chromadb
-      - BACKEND_CHROMADB_COLLECTION_NAME=np2024-dataset
-      - BACKEND_DATA_SOURCE_PATH=./data/202407251532-pandas-cleaned.csv
+      - SAMPLE_DATA=https://drive.google.com/file/d/1cUODRGGLOXVdgy6RNLvOaRboEsr40cyb/view?usp=drive_link
     deploy:
       resources:
         reservations:

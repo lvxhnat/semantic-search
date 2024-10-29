@@ -1,18 +1,17 @@
-FROM debian:buster-slim
-FROM node:16.20.2 as build-stage
+# Use Node.js 18 as the base image
+FROM node:18 as build-stage
 
 WORKDIR /app/frontend
 ENV PATH /app/node_modules/.bin:$PATH
 
-# Update package sources to use Debian Buster repositories
-RUN sed -i 's/stretch/buster/' /etc/apt/sources.list
-
+# Copy package files
 COPY frontend/package.json .
 COPY frontend/yarn.lock .
 
 # Install dependencies using Yarn
 RUN yarn install
 
+# Copy the rest of your frontend code
 COPY frontend .
 
 # Build the project

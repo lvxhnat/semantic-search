@@ -25,6 +25,8 @@ WORKDIR /app/backend
 # Copy your backend application code
 COPY ../../backend .
 
+RUN pip install requests pandas
+
 # Activate the virtual environment and install dependencies
 RUN /venv/bin/pip install --no-cache-dir --upgrade pip
 RUN /venv/bin/pip install --no-cache-dir -e .
