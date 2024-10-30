@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   frontend:
     build:
@@ -8,11 +10,12 @@ services:
     depends_on:
       - backend
     ports:
-      - 3000:3000
+      - "3000:3000"
     stdin_open: true
     tty: true
     networks:
       - base
+
   backend:
     build:
       context: ../
@@ -28,9 +31,10 @@ services:
             - capabilities: [gpu]
     runtime: nvidia
     ports:
-      - 1236:1236
+      - "1236:1236"
     networks:
       - base
+
 networks:
   base:
     driver: bridge

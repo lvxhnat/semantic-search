@@ -35,4 +35,4 @@ RUN /venv/bin/pip install --no-cache-dir -e .
 EXPOSE 1236
 
 # Command to run your application
-CMD ["uvicorn", "src.backend.app.main:app", "--port", "1236"]
+CMD ["uvicorn", "src.backend.app.main:app", "--host", "0.0.0.0", "--port", "1236"]
