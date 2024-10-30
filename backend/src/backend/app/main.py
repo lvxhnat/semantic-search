@@ -9,7 +9,7 @@ from backend.app.services.chromadb import chroma_collection
 app = FastAPI()
 
 @asynccontextmanager
-def startup_event(app: FastAPI):
+async def startup_event(app: FastAPI):
     if chroma_collection.count() == 0:
         print("ChromaDB is empty. Starting embedding process...")
         i, chunk_size = 0, 1_000
