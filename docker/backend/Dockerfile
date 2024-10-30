@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-dev \
     libpq-dev \
+    poppler-utils \
     python3.10-venv \
     nvidia-utils-510 \
     && apt-get clean \
