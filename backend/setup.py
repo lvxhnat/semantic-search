@@ -19,6 +19,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 base_requirements = {
     "quanto",
+    "pdf2image",
     "python-multipart",
     "accelerate",
     "pandas",
