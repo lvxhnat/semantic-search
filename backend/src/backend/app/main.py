@@ -28,6 +28,7 @@ def startup_event(app: FastAPI):
             ids = df.iloc[i - chunk_size:]["node_id"].to_list()
         )
     print("Startup tasks completed.")
+    yield
 
 def create_app() -> FastAPI:
 
