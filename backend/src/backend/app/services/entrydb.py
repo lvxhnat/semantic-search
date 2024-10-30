@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 from pathlib import Path
 from sqlalchemy import engine
@@ -14,6 +15,7 @@ SOURCE_PATH='https://drive.google.com/uc?id=' + os.environ["SAMPLE_DATA"].split(
 if SOURCE is None or SOURCE_PATH is None: 
     raise ValueError(f"Source or Source Path should not be none. Please specify.")
 
+df = pd.DataFrame()
 if SOURCE == "csv":
     df = (
         pd.read_csv(SOURCE_PATH)
