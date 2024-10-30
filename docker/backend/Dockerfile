@@ -1,11 +1,9 @@
-# Use NVIDIA CUDA image https://gitlab.com/nvidia/container-images/cuda/blob/master/doc/supported-tags.md
-# Check with nvcc --version
-# Check with lsb_release -a
+# Use NVIDIA CUDA image
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install necessary packages including Python, pip, and PostgreSQL development libraries
+# Install necessary packages including Python, pip, PostgreSQL development libraries, and nvidia-utils
 RUN apt-get update && apt-get install -y --no-install-recommends \
     vim \
     python3.10 \
@@ -13,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     libpq-dev \
     python3.10-venv \
+    nvidia-utils-510 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -25,9 +24,10 @@ WORKDIR /app/backend
 # Copy your backend application code
 COPY ../../backend .
 
+# Install basic Python dependencies
 RUN pip install requests pandas
 
-# Activate the virtual environment and install dependencies
+# Activate the virtual environment and install application dependencies
 RUN /venv/bin/pip install --no-cache-dir --upgrade pip
 RUN /venv/bin/pip install --no-cache-dir -e .
 
