@@ -19,6 +19,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 base_requirements = {
     "tiktoken",
+    "torchvision",
+    "verovio",
     "quanto",
     "pdf2image",
     "python-multipart",
