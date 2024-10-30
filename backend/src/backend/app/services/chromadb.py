@@ -12,7 +12,7 @@ os.makedirs(str(BACKEND_CHROMADB_PATH), exist_ok = True)
 print(f"Chromadb Loaded from path {BACKEND_CHROMADB_PATH}")
 
 chroma_client = chromadb.PersistentClient(path=BACKEND_CHROMADB_PATH)
-chroma_collection = chroma_client.get_collection(name=BACKEND_CHROMADB_COLLECTION_NAME)
+chroma_collection = chroma_client.get_or_create_collection(name=BACKEND_CHROMADB_COLLECTION_NAME)
 
 get_sample_data = os.environ.get("SAMPLE_DATA")
 
