@@ -16,30 +16,30 @@ interface GPUData {
 
 export const HomeToolbar = (props: HomeToolbarProps) => {
   const handleDrawerOpen = () => props.setOpen(true);
-  const [gpuUsage, setGpuUsage] = React.useState<GPUData>({} as GPUData);
+  // const [gpuUsage, setGpuUsage] = React.useState<GPUData>({} as GPUData);
 
-  React.useEffect(() => {
-    const ws = new WebSocket(
-      `${process.env.REACT_APP_WEBSOCKET_URL!}/ws/gpu-usage`,
-    );
+  // React.useEffect(() => {
+  //   const ws = new WebSocket(
+  //     `${process.env.REACT_APP_WEBSOCKET_URL!}/ws/gpu-usage`,
+  //   );
 
-    ws.onmessage = (event) => {
-      setGpuUsage(JSON.parse(event.data)); // Update the state with new data from WebSocket
-    };
+  //   ws.onmessage = (event) => {
+  //     setGpuUsage(JSON.parse(event.data)); // Update the state with new data from WebSocket
+  //   };
 
-    ws.onerror = (event) => {
-      console.error("WebSocket error:", event);
-    };
+  //   ws.onerror = (event) => {
+  //     console.error("WebSocket error:", event);
+  //   };
 
-    ws.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+  //   ws.onclose = () => {
+  //     console.log("WebSocket connection closed");
+  //   };
 
-    // Cleanup WebSocket connection when component unmounts
-    return () => {
-      ws.close();
-    };
-  }, []);
+  //   // Cleanup WebSocket connection when component unmounts
+  //   return () => {
+  //     ws.close();
+  //   };
+  // }, []);
 
   return (
     <S.AppBar position="fixed" open={props.open}>
@@ -57,7 +57,7 @@ export const HomeToolbar = (props: HomeToolbarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        <div
+        {/* <div
           style={{
             width: "100%",
             display: "flex",
@@ -71,7 +71,7 @@ export const HomeToolbar = (props: HomeToolbarProps) => {
               ? `${((100 * +gpuUsage.usage) / +gpuUsage.capacity).toFixed(2)}%`
               : null}
           </Typography>
-        </div>
+        </div> */}
       </Toolbar>
     </S.AppBar>
   );
