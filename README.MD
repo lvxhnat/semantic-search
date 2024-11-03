@@ -34,6 +34,26 @@ docker compose up --build -d
 ```bash
 ssh lohyikuang@HOST_IP_ADDRESS -L 3000:localhost:3000 -L 1236:localhost:1236
 ```
+### Checking Server is Running 
+
+Because our current server contains multiple model artifacts that have to be pulled down from HuggingFace, it will take some time for the initial server to be setup. To check, 
+
+```bash
+docker ps
+```
+
+Check the container logs
+```bash
+docker logs {container_id}
+```
+
+Look out for the following line to indicate the server has completed running
+```bash
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:1236 (Press CTRL+C to quit)
+```
 
 ### Structure 
 
