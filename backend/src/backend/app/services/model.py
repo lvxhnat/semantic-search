@@ -43,4 +43,4 @@ ocr_model = AutoModel.from_pretrained(
     pad_token_id=tokenizer.eos_token_id,
     quantization_config=QuantoConfig(weights="int8"),
 )
-ocr_model = model.eval().cuda()
+ocr_model = ocr_model.eval().cuda()
