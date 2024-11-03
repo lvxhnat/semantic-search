@@ -197,6 +197,7 @@ export default function Home() {
             {textHistory
               .slice(1, textHistory.length)
               .map((entry: ChatBoxType, i) => {
+                if (!entry.content) return 
                 const text = entry.content
                   .replace(/(\s*\d+\.\s)/g, "\n$1")
                   .replaceAll("\n\n", "\n");
