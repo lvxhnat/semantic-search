@@ -6,8 +6,8 @@ services:
       context: ../
       dockerfile: docker/frontend/Dockerfile
     environment:
-      - REACT_APP_BASE_URL=http://localhost:1236
-      - REACT_APP_WEBSOCKET_URL=ws://localhost:1236
+      - REACT_APP_BASE_URL=http://backend:1236
+      - REACT_APP_WEBSOCKET_URL=ws://backend:1236
     depends_on:
       - backend
     ports:
