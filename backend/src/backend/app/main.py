@@ -40,19 +40,11 @@ def create_app() -> FastAPI:
         lifespan=startup_event
     )
 
-    origins = [
-        "http://localhost:*",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://frontend:3000",
-        "http://frontend:*",
-    ]
-
     app.include_router(api_router)
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
