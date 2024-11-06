@@ -24,7 +24,6 @@ services:
     environment:
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
       - NVIDIA_VISIBLE_DEVICES=all
-      - SAMPLE_DATA=https://drive.google.com/file/d/1cUODRGGLOXVdgy6RNLvOaRboEsr40cyb/view?usp=drive_link
     runtime: nvidia
     ports:
       - "1236:1236"
