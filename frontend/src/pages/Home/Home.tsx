@@ -259,7 +259,9 @@ export default function Home() {
                   : null
               }
               handleSubmit={(entry) => {
-                const sanitizedEntry = JSON.parse(JSON.stringify(entry));
+                const { role, content, reference_ids } = entry;
+                const sanitizedEntry = { role, content, reference_ids: reference_ids || {} };
+                
                 const newTextHistory = [...textHistory, sanitizedEntry];
                 const source = axios.CancelToken.source();
                 setCancelTokenSource(source);
