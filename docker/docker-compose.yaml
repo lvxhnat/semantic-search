@@ -28,6 +28,9 @@ services:
     runtime: nvidia
     ports:
       - "1236:1236"
+    volumes:
+      - ../backend/data/models:/root/.cache/huggingface 
+      - ../backend/data/chromadb:/app/data/chromadb
     networks:
       - base
 

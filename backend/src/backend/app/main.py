@@ -10,6 +10,7 @@ app = FastAPI()
 
 @asynccontextmanager
 async def startup_event(app: FastAPI):
+    print(f"Found existing chromadb collection with {chroma_collection.count()} documents")
     if chroma_collection.count() == 0:
         print("ChromaDB is empty. Starting embedding process...")
         i, chunk_size = 0, 1_000
