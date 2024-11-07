@@ -260,6 +260,7 @@ export default function Home() {
               }
               handleSubmit={(entry) => {
                 const { role, content, reference_ids } = entry;
+                console.log(`Logging user role: ${role} on content ${content}`)
                 const sanitizedEntry = { role, content, reference_ids: reference_ids || {} };
                 
                 const newTextHistory = [...textHistory, sanitizedEntry];
