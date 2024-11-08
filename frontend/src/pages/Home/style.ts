@@ -15,38 +15,41 @@ export const Container = styled("div")(({ theme }) => ({
 
 interface ChatInputWrapperProps extends DefaultProps {}
 
-export const ChatInputWrapper = styled("div")<ChatInputWrapperProps>(
-  ({ theme, isEmpty }) => ({
-    marginBottom: isEmpty ? theme.spacing(15) : theme.spacing(2),
-    display: "flex",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    gap: theme.spacing(2),
-  }),
-);
+export const ChatInputWrapper = styled("div", {
+  shouldForwardProp: (prop) => prop !== "isEmpty",
+})<ChatInputWrapperProps>(({ theme, isEmpty }) => ({
+  marginBottom: isEmpty ? theme.spacing(15) : theme.spacing(2),
+  display: "flex",
+  width: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+  gap: theme.spacing(2),
+}));
 
 interface ChatWrapperProps extends DefaultProps {}
 
-export const ChatWrapper = styled("div")<ChatWrapperProps>(
-  ({ theme, isEmpty }) => ({
-    gap: 20,
-    display: isEmpty ? "none" : "flex",
-    flexDirection: "column",
-    height: "100%",
-    maxWidth: "1200px",
-    overflowY: "auto",
-    "::-webkit-scrollbar": {
-      display: "none",
-    },
-  }),
-);
+export const ChatWrapper = styled("div", {
+  shouldForwardProp: (prop) => prop !== "isEmpty",
+})<ChatWrapperProps>(({ theme, isEmpty }) => ({
+  gap: 20,
+  display: isEmpty ? "none" : "flex",
+  flexDirection: "column",
+  height: "100%",
+  maxWidth: "1200px",
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
+}));
+
 interface MainProps extends DefaultProps {
   open?: boolean;
 }
 
-export const Main = styled(Grid)<MainProps>(({ theme, open, isEmpty }) => ({
+export const Main = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== "isEmpty" && prop !== "open",
+})<MainProps>(({ theme, open, isEmpty }) => ({
   flexGrow: 1,
   height: "100%",
   display: "flex",

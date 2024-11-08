@@ -259,6 +259,7 @@ export default function Home() {
                   : null
               }
               handleSubmit={(entry) => {
+                console.log(entry, "Entry")
                 const { role, content, reference_ids } = entry;
                 console.log(`Logging user role: ${role} on content ${content}`)
                 const sanitizedEntry = { role, content, reference_ids: reference_ids || {} };
