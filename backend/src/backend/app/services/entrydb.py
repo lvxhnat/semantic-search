@@ -1,5 +1,4 @@
 import os
-import re
 import pandas as pd
 from pathlib import Path
 from sqlalchemy import engine

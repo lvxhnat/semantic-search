@@ -3,7 +3,7 @@ import axios from "axios";
 const request = () => {
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
-    timeout: 60000,
+    timeout: 100000,
     headers: {
       Authorization: "null",
     },

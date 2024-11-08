@@ -28,8 +28,8 @@ services:
     ports:
       - "1236:1236"
     volumes:
-      - ../backend/data/models:/root/.cache/huggingface 
-      - ../backend/data/chromadb:/app/data/chromadb
+      - .semantic_search_cache/backend/data/models:/root/.cache/huggingface 
+      - .semantic_search_cache/backend/data/chromadb:/app/data/chromadb
     networks:
       - base
 
