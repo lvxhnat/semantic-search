@@ -103,7 +103,12 @@ export default function ChatInput(props: ChatInputProps) {
             }}
             value={removeLineBreaks(value) ?? ""}
             onChange={(event) => setValue(event.target.value ?? "")}
-            onKeyDown={(e) => (e.keyCode === 13 ? handleSubmit() : null)}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13) {
+                e.preventDefault(); // Prevent default form submission if it's in a form
+                handleSubmit(); // Calls handleSubmit, which constructs and passes the JSON object
+              }
+            }}
           />
           <S.FunctionalityWrapper>
             <S.MetaFunctionalityWrapper>
@@ -132,7 +137,7 @@ export default function ChatInput(props: ChatInputProps) {
             <S.StyledIconButton
               disabled={value === "" && !props.loading}
               disableFocusRipple
-              onClick={props.loading ? props.handleCancel : props.handleSubmit}
+              onClick={() => (props.loading ? props.handleCancel() : handleSubmit())}
             >
               {props.loading ? <StopCircleIcon /> : <SendIcon />}
             </S.StyledIconButton>

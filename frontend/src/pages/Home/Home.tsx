@@ -258,7 +258,8 @@ export default function Home() {
                   ? cancelTokenSource.cancel("Operation canceled by user")
                   : null
               }
-              handleSubmit={(entry) => {
+              handleSubmit={(event) => {
+                const entry = event
                 console.log(entry, "Entry")
                 const { role, content, reference_ids } = entry;
                 console.log(`Logging user role: ${role} on content ${content}`)
