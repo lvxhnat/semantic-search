@@ -40,7 +40,7 @@ docker compose up --build -d
 ```
 7. [Optional] Access via SSH, run:
 ```bash
-ssh lohyikuang@HOST_IP_ADDRESS -L 3000:localhost:3000 -L 1236:localhost:1236
+ssh {USERNMAE}@HOST_IP_ADDRESS -L 3000:localhost:3000 -L 1236:localhost:1236
 ```
 ### Checking Server is Running 
 
