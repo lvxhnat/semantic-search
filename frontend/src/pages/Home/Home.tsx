@@ -197,7 +197,7 @@ export default function Home() {
             {textHistory
               .slice(1, textHistory.length)
               .map((entry: ChatBoxType, i) => {
-                if (!entry.content) return 
+                if (!entry.content) return;
                 const text = entry.content
                   .replace(/(\s*\d+\.\s)/g, "\n$1")
                   .replaceAll("\n\n", "\n");
@@ -259,12 +259,16 @@ export default function Home() {
                   : null
               }
               handleSubmit={(event) => {
-                const entry = event
-                console.log(entry, "Entry")
+                const entry = event;
+                console.log(entry, "Entry");
                 const { role, content, reference_ids } = entry;
-                console.log(`Logging user role: ${role} on content ${content}`)
-                const sanitizedEntry = { role, content, reference_ids: reference_ids || {} };
-                
+                console.log(`Logging user role: ${role} on content ${content}`);
+                const sanitizedEntry = {
+                  role,
+                  content,
+                  reference_ids: reference_ids || {},
+                };
+
                 const newTextHistory = [...textHistory, sanitizedEntry];
                 const source = axios.CancelToken.source();
                 setCancelTokenSource(source);

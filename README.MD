@@ -1,3 +1,11 @@
+# MultiModal Semantic Search UI
+
+Local multi modal semantic search without 🦜️ LangChain, built with FASTAPI + React. 
+
+| ![Alt Text 1](./assets/demo-3.png) | ![Alt Text 2](./assets/demo-1.png) |
+|---------------------------|---------------------------|
+| ![Alt Text 3](./assets/demo-2.png) | ![Alt Text 4](./assets/demo-4.png) |
+
 ### Quick Start 
 
 1. Depending on your installer, download the related NVIDIA Container Toolkit [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-apt)

@@ -137,7 +137,9 @@ export default function ChatInput(props: ChatInputProps) {
             <S.StyledIconButton
               disabled={value === "" && !props.loading}
               disableFocusRipple
-              onClick={() => (props.loading ? props.handleCancel() : handleSubmit())}
+              onClick={() =>
+                props.loading ? props.handleCancel() : handleSubmit()
+              }
             >
               {props.loading ? <StopCircleIcon /> : <SendIcon />}
             </S.StyledIconButton>
